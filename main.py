@@ -14,8 +14,16 @@ log = None
 
 PAGE_SIZE = 10
 
+SELECT_STR = """Select Message_NormalizedSubject, Message_SenderList, Message_Preview, PathToDataFile, Message_TimeSent
+        from Mail 
+        where %s 
+        ORDER BY Message_TimeSent DESC 
+        LIMIT ? OFFSET ?
+        """
+
 def main(wf):
-    query = sys.argv[1]  
+    query = sys.argv[1]
+    log.info(query)
 
     handle(query)
 
@@ -25,19 +33,15 @@ def handle(query):
     if (len(query) < 3):
         return
 
-    query = unicode(query, 'utf-8')  
-
     homePath = os.environ['HOME']
+
     # outlookData = homePath + '/outlook/'
     outlookData = homePath + r'/Library/Group Containers/UBF8T346G9.Office/Outlook/Outlook 15 Profiles/Main Profile/Data/'
     log.info(outlookData)
 
-    """Read in the data source and add it to the search index database"""
-    # start = time()
-    con = sqlite3.connect(outlookData + 'Outlook.sqlite')
-    count = 0
-    cur = con.cursor()
+    query = unicode(query, 'utf-8')  
 
+    # processing query
     m = re.search(r'\|(\d+)$', query)
     page = 0 if m is None else int(m.group(1))
     if page:
@@ -45,14 +49,31 @@ def handle(query):
     log.info("query string is: " + unicode(query))
     log.info("query page is: " + str(page))
 
-    offset = int(page) * PAGE_SIZE
+    searchType = 'All'
 
     if query.startswith('from:'):
-        queryFrom(cur, query.replace('from:', "").strip(), offset)
+        searchType = 'From'
+        query = query.replace('from:', '')
     elif query.startswith('title:'):
-        queryTitle(cur, query.replace('title:', "").strip(), offset)
-    else:
-        queryAll(cur, query, offset)
+        searchType = 'Title'
+        query = query.replace('title:', '')
+
+    if query is None or query == '':
+        return
+
+    keywords = query.split(' ')
+
+    configuredPageSize = wf.stored_data('page_size')
+    offset = int(page) * (configuredPageSize if configuredPageSize else PAGE_SIZE)
+
+    """Read in the data source and add it to the search index database"""
+    # start = time()
+    con = sqlite3.connect(outlookData + 'Outlook.sqlite')
+    count = 0
+    cur = con.cursor()
+
+    searchMethod = getattr(sys.modules[__name__], 'query' + searchType)
+    searchMethod(cur, keywords, offset)
 
     if cur.rowcount: 
         for row in cur:
@@ -71,44 +92,97 @@ def handle(query):
     cur.close()
     wf.send_feedback()
 
-def queryFrom(cur, query, offset):
-    if query is None:
+def queryFrom(cur, keywords, offset):
+    if len(keywords) is None:
         return
     log.info("query by sender")
-    res = cur.execute("""
-    Select Message_NormalizedSubject, Message_SenderList, Message_Preview, PathToDataFile, Message_TimeSent
-        from Mail 
-        where Message_SenderList LIKE ?
-        ORDER BY Message_TimeSent DESC 
-        LIMIT ? OFFSET ?
-    """ , (unicode('%'+query+'%'), PAGE_SIZE, offset, ))
+    log.info(keywords)
 
-def queryTitle(cur, query, offset):
-    if query is None:
+    senderConditions = None
+    senderVars = []
+
+    for kw in keywords:
+        senderVars.append('%' + kw + '%')
+        if senderConditions is None:
+            senderConditions = '(Message_SenderList LIKE ? '
+        else:
+            senderConditions += 'AND Message_SenderList LIKE ? '
+
+    senderConditions += ') '
+
+    variables = tuple(senderVars)
+
+    log.info(SELECT_STR % (senderConditions))
+    log.info(variables)
+
+    res = cur.execute( SELECT_STR % (senderConditions), variables + (PAGE_SIZE, offset, ))
+
+def queryTitle(cur, keywords, offset):
+    if len(keywords) is None:
         return
     log.info("query by subject")
-    res = cur.execute("""
-    Select Message_NormalizedSubject, Message_SenderList, Message_Preview, PathToDataFile, Message_TimeSent
-        from Mail 
-        where Message_NormalizedSubject LIKE ?
-        ORDER BY Message_TimeSent DESC
-        LIMIT ? OFFSET ?
-    """ , (unicode('%'+query+'%'), PAGE_SIZE, offset, ))
+    log.info(keywords)
 
-def queryAll(cur, query, offset):
-    if query is None:
+    titleConditions = None
+    titleVars = []
+
+    for kw in keywords:
+        titleVars.append('%' + kw + '%')
+        if titleConditions is None:
+            titleConditions = '(Message_NormalizedSubject LIKE ? '
+        else:
+            titleConditions += 'AND Message_NormalizedSubject LIKE ? '
+
+    titleConditions += ') '
+
+    variables = tuple(titleVars)
+
+    log.info(SELECT_STR % (titleConditions))
+    log.info(variables)
+
+    res = cur.execute( SELECT_STR % (titleConditions), variables + (PAGE_SIZE, offset, ))
+
+def queryAll(cur, keywords, offset):
+    if len(keywords) is None:
         return
     log.info("query by subject, content and sender")
-    res = cur.execute("""
-    Select Message_NormalizedSubject, Message_SenderList, Message_Preview, PathToDataFile, Message_TimeSent
-        from Mail 
-        where 
-        Message_NormalizedSubject LIKE ? 
-        or Message_Preview LIKE ? 
-        or Message_SenderList LIKE ?
-        ORDER BY Message_TimeSent DESC
-        LIMIT ? OFFSET ?
-    """ , (unicode('%'+query+'%'), unicode('%'+query+'%'), unicode('%'+query+'%'), PAGE_SIZE, offset, ))
+    log.info(keywords)
+
+    titleConditions = None
+    senderConditions = None
+    contentConditions = None
+    titleVars = []
+    senderVars = []
+    contentVars = []
+
+    for kw in keywords:
+        titleVars.append('%' + kw + '%')
+        senderVars.append('%' + kw + '%')
+        contentVars.append('%' + kw + '%')
+        if titleConditions is None:
+            titleConditions = '(Message_NormalizedSubject LIKE ? '
+        else:
+            titleConditions += 'AND Message_NormalizedSubject LIKE ? '
+        if senderConditions is None:
+            senderConditions = 'OR (Message_SenderList LIKE ? '
+        else:
+            senderConditions += 'AND Message_SenderList LIKE ? '
+        if contentConditions is None:
+            contentConditions = 'OR (Message_Preview LIKE ? '
+        else:
+            contentConditions += 'AND Message_Preview LIKE ? '
+
+    titleConditions += ') '
+    senderConditions += ') '
+    contentConditions += ') '
+
+    variables = tuple(titleVars) + tuple(senderVars) + tuple(contentVars)
+
+    log.info(SELECT_STR % (titleConditions + senderConditions + contentConditions))
+    log.info(variables)
+
+    res = cur.execute( SELECT_STR % (titleConditions + senderConditions + contentConditions), 
+        variables + (PAGE_SIZE, offset, ))
 
 if __name__ == '__main__':
     wf = Workflow()

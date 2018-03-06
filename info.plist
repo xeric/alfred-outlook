@@ -156,7 +156,7 @@
 				<key>script</key>
 				<string>query=$1
 
-python main.py $query</string>
+python main.py "$query"</string>
 				<key>scriptargtype</key>
 				<integer>1</integer>
 				<key>scriptfile</key>
