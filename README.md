@@ -11,6 +11,9 @@ By default, it will search all three above togther, you can figure out which sin
 - olk title:\[keyword\]
 
 It supports pagination.
+Supports multiple keywords search:
+- olk \[keyword1\] \[keyword2\] \[keyword3\] 
 
 Download built version here:
+
 https://github.com/xeric/alfred-outlook/releases
