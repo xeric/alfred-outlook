@@ -7,7 +7,7 @@ This workflow supports searching:
 * Mail Preview Content
 
 By default, it will search all three above togther, you can figure out which single item you want to search with below format:
-olk from:\[keyword\]
-olk title:\[keyword\]
+- olk from:\[keyword\]
+- olk title:\[keyword\]
 
 It supports pagination.
