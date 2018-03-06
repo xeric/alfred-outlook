@@ -5,6 +5,7 @@ This workflow supports searching:
 * Mail Subject
 * Mail Sender
 * Mail Preview Content
+
 By default, it will search all three above togther, you can figure out which single item you want to search with below format:
 olk from:\[keyword\]
 olk title:\[keyword\]
