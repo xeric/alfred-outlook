@@ -63,8 +63,9 @@ def handle(query):
 
     keywords = query.split(' ')
 
-    configuredPageSize = wf.stored_data('page_size')
-    offset = int(page) * (configuredPageSize if configuredPageSize else PAGE_SIZE)
+    configuredPageSize = wf.stored_data('pagesize')
+    calculatedPageSize = (int(configuredPageSize) if configuredPageSize else PAGE_SIZE)
+    offset = int(page) * calculatedPageSize
 
     """Read in the data source and add it to the search index database"""
     # start = time()
@@ -73,7 +74,7 @@ def handle(query):
     cur = con.cursor()
 
     searchMethod = getattr(sys.modules[__name__], 'query' + searchType)
-    searchMethod(cur, keywords, offset)
+    searchMethod(cur, keywords, offset, calculatedPageSize)
 
     if cur.rowcount: 
         for row in cur:
@@ -87,12 +88,12 @@ def handle(query):
                 content = "no content preview"
             wf.add_item(title=unicode(row[0]), subtitle=str('[' + unicode(row[1]) + '] ' + content), valid=True, uid=str(row[4]), arg=path, type='file')
         page += 1        
-        wf.add_item(title='Next ' + str(PAGE_SIZE) + ' results...', subtitle='click to retrieve another ' + str(PAGE_SIZE) + ' results', arg=query + '|' + str(page), uid='z' + str(random.random()), valid=True)
+        wf.add_item(title='Next ' + str(calculatedPageSize) + ' results...', subtitle='click to retrieve another ' + str(calculatedPageSize) + ' results', arg=query + '|' + str(page), uid='z' + str(random.random()), valid=True)
 
     cur.close()
     wf.send_feedback()
 
-def queryFrom(cur, keywords, offset):
+def queryFrom(cur, keywords, offset, pageSize):
     if len(keywords) is None:
         return
     log.info("query by sender")
@@ -115,9 +116,9 @@ def queryFrom(cur, keywords, offset):
     log.info(SELECT_STR % (senderConditions))
     log.info(variables)
 
-    res = cur.execute( SELECT_STR % (senderConditions), variables + (PAGE_SIZE, offset, ))
+    res = cur.execute( SELECT_STR % (senderConditions), variables + (pageSize, offset, ))
 
-def queryTitle(cur, keywords, offset):
+def queryTitle(cur, keywords, offset, pageSize):
     if len(keywords) is None:
         return
     log.info("query by subject")
@@ -140,9 +141,9 @@ def queryTitle(cur, keywords, offset):
     log.info(SELECT_STR % (titleConditions))
     log.info(variables)
 
-    res = cur.execute( SELECT_STR % (titleConditions), variables + (PAGE_SIZE, offset, ))
+    res = cur.execute( SELECT_STR % (titleConditions), variables + (pageSize, offset, ))
 
-def queryAll(cur, keywords, offset):
+def queryAll(cur, keywords, offset, pageSize):
     if len(keywords) is None:
         return
     log.info("query by subject, content and sender")
@@ -179,10 +180,10 @@ def queryAll(cur, keywords, offset):
     variables = tuple(titleVars) + tuple(senderVars) + tuple(contentVars)
 
     log.info(SELECT_STR % (titleConditions + senderConditions + contentConditions))
-    log.info(variables)
+    log.info(variables + (pageSize, offset, ))
 
     res = cur.execute( SELECT_STR % (titleConditions + senderConditions + contentConditions), 
-        variables + (PAGE_SIZE, offset, ))
+        variables + (pageSize, offset, ))
 
 if __name__ == '__main__':
     wf = Workflow()

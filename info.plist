@@ -57,11 +57,37 @@
 				<false/>
 			</dict>
 		</array>
+		<key>AC03960B-EBAE-4D3B-898B-E74009E31C9F</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>D46C9EAB-A6BD-47D9-8189-2DB13965832D</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
 		<key>C005570F-B610-4B2F-ADC5-D1D60A6DD77F</key>
 		<array>
 			<dict>
 				<key>destinationuid</key>
 				<string>2DB07F3A-9BF1-4FCD-B19F-0EE1232C2154</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>D46C9EAB-A6BD-47D9-8189-2DB13965832D</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>0B63B674-D674-4D94-B97A-9D8122956F48</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -215,6 +241,97 @@ python main.py "$query"</string>
 			<key>version</key>
 			<integer>1</integer>
 		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>concurrently</key>
+				<false/>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>script</key>
+				<string>query=$1
+
+python setconf.py "$query"</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>type</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>0B63B674-D674-4D94-B97A-9D8122956F48</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>alfredfiltersresults</key>
+				<false/>
+				<key>alfredfiltersresultsmatchmode</key>
+				<integer>0</integer>
+				<key>argumenttrimmode</key>
+				<integer>0</integer>
+				<key>argumenttype</key>
+				<integer>0</integer>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>keyword</key>
+				<string>olkc</string>
+				<key>queuedelaycustom</key>
+				<integer>3</integer>
+				<key>queuedelayimmediatelyinitially</key>
+				<true/>
+				<key>queuedelaymode</key>
+				<integer>0</integer>
+				<key>queuemode</key>
+				<integer>1</integer>
+				<key>runningsubtext</key>
+				<string>processing...</string>
+				<key>script</key>
+				<string>query=$1
+
+python conf.py "$query"</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>subtext</key>
+				<string>pagesize, folder ...</string>
+				<key>title</key>
+				<string>Configre Outlook Search</string>
+				<key>type</key>
+				<integer>0</integer>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.scriptfilter</string>
+			<key>uid</key>
+			<string>AC03960B-EBAE-4D3B-898B-E74009E31C9F</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argument</key>
+				<string>'{query}', {allvars}</string>
+				<key>cleardebuggertext</key>
+				<false/>
+				<key>processoutputs</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.utility.debug</string>
+			<key>uid</key>
+			<string>D46C9EAB-A6BD-47D9-8189-2DB13965832D</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
 	</array>
 	<key>readme</key>
 	<string>This workflow used for searching Outlook Mail on Mac, support Mac Outlook Version 16.
@@ -231,6 +348,13 @@ Mail content search is based on preview content, not full text of mail, so will 
 			<integer>490</integer>
 			<key>ypos</key>
 			<integer>190</integer>
+		</dict>
+		<key>0B63B674-D674-4D94-B97A-9D8122956F48</key>
+		<dict>
+			<key>xpos</key>
+			<integer>630</integer>
+			<key>ypos</key>
+			<integer>440</integer>
 		</dict>
 		<key>1A19992F-4A02-44E8-8F36-16FE6A087598</key>
 		<dict>
@@ -260,12 +384,26 @@ Mail content search is based on preview content, not full text of mail, so will 
 			<key>ypos</key>
 			<integer>210</integer>
 		</dict>
+		<key>AC03960B-EBAE-4D3B-898B-E74009E31C9F</key>
+		<dict>
+			<key>xpos</key>
+			<integer>260</integer>
+			<key>ypos</key>
+			<integer>440</integer>
+		</dict>
 		<key>C005570F-B610-4B2F-ADC5-D1D60A6DD77F</key>
 		<dict>
 			<key>xpos</key>
 			<integer>490</integer>
 			<key>ypos</key>
 			<integer>290</integer>
+		</dict>
+		<key>D46C9EAB-A6BD-47D9-8189-2DB13965832D</key>
+		<dict>
+			<key>xpos</key>
+			<integer>490</integer>
+			<key>ypos</key>
+			<integer>470</integer>
 		</dict>
 	</dict>
 	<key>version</key>
