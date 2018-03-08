@@ -13,6 +13,7 @@ By default, it will search all three above togther, you can figure out which sin
 It supports pagination.
 Supports multiple keywords search:
 - olk \[keyword1\] \[keyword2\] \[keyword3\] 
+- olk title:\[keyword1\] \[keyword2\] \[keyword3\] 
 
 You can use olkc to set some configuration for search:
 * olkc pagesize [number]
