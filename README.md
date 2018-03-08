@@ -14,6 +14,10 @@ It supports pagination.
 Supports multiple keywords search:
 - olk \[keyword1\] \[keyword2\] \[keyword3\] 
 
+You can use olkc to set some configuration for search:
+* olkc pagesize [number]
+* olkc folder
+
 Download built version here:
 
 https://github.com/xeric/alfred-outlook/releases
