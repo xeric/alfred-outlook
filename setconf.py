@@ -7,6 +7,7 @@ import re
 
 from workflow import Workflow
 from workflow.notify import notify
+from consts import *
 
 log = None
 
