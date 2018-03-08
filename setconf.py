@@ -10,8 +10,6 @@ from workflow.notify import notify
 
 log = None
 
-KEY_PAGE_SIZE = 'pagesize'
-
 def main(wf):
     query = sys.argv[1]
     log.info(query)
@@ -21,7 +19,13 @@ def main(wf):
 def handle(query):
     query = unicode(query, 'utf-8')
 
-    if re.match(r'\S+\s+\S+', query) is None:
+    validQuery = False
+    for rule in RULES:
+        if re.match(rule, query) is not None:
+            validQuery = True
+            break
+    if not validQuery:
+        notify('Error', query + ' is not a valid configuration!')
         return
 
     query.replace(r'\s+', ' ')
