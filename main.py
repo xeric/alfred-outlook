@@ -1,4 +1,4 @@
-#coding:utf-8
+#encoding:utf-8
 from __future__ import print_function, unicode_literals
 
 import sys
@@ -23,8 +23,7 @@ SELECT_STR = """Select Message_NormalizedSubject, Message_SenderList, Message_Pr
 FOLDER_COND = """ AND Record_FolderID = ? """
 
 def main(wf):
-    query = sys.argv[1]
-    log.info(query)
+    query = wf.decode(sys.argv[1])
 
     handle(query)
 
@@ -44,8 +43,6 @@ def handle(query):
         # outlookData = homePath + '/outlook/'
         outlookData = homePath + r'/Library/Group Containers/UBF8T346G9.Office/Outlook/Outlook 15 Profiles/Main Profile/Data/'
         log.info(outlookData)
-
-        query = unicode(query, 'utf-8')  
 
         # processing query
         m = re.search(r'\|(\d+)$', query)
