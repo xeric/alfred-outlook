@@ -25,11 +25,11 @@ FOLDER_COND = """ AND Record_FolderID = ? """
 def main(wf):
     query = wf.decode(sys.argv[1])
 
-    handle(query)
+    handle(wf, query)
 
     log.info('searching mail with keyword')
 
-def handle(query):
+def handle(wf, query):
     if (len(query) < 3):
         wf.add_item(title='Type more characters to serach...', 
                     subtitle='too less characters will lead huge irrelevant results', 
@@ -49,7 +49,7 @@ def handle(query):
         page = 0 if m is None else int(m.group(1))
         if page:
             query = query.replace('|' + str(page), '')
-        log.info("query string is: " + unicode(query))
+        log.info("query string is: " + query)
         log.info("query page is: " + str(page))
 
         searchType = 'All'
@@ -86,12 +86,12 @@ def handle(query):
             searchMethod = getattr(sys.modules[__name__], 'query' + searchType)
             searchMethod(cur, keywords, offset, calculatedPageSize, folder)
 
-            if cur.rowcount: 
+            if cur.rowcount:
                 for row in cur:
                     log.info(row[0])
                     path = outlookData + row[3]
                     if row[2]:
-                        content = row[2].encode('ascii', 'ignore').decode('ascii')
+                        content = wf.decode(row[2])
                         content = content.replace('\r\n', " ")
                     else:
                         content = "no content preview"
