@@ -1,12 +1,12 @@
-#encoding:utf-8
+# encoding:utf-8
 from __future__ import print_function, unicode_literals
 
 import sys
 import os
 import sqlite3
 import re
-from time import time
 import random
+import unicodedata as ud
 
 from workflow import Workflow
 from workflow import util
@@ -22,6 +22,7 @@ SELECT_STR = """Select Message_NormalizedSubject, Message_SenderList, Message_Pr
         """
 FOLDER_COND = """ AND Record_FolderID = ? """
 
+
 def main(wf):
     query = wf.decode(sys.argv[1])
 
@@ -29,12 +30,14 @@ def main(wf):
 
     log.info('searching mail with keyword')
 
+
 def handle(wf, query):
-    if (len(query) < 3):
-        wf.add_item(title='Type more characters to serach...', 
-                    subtitle='too less characters will lead huge irrelevant results', 
-                    arg='', 
-                    uid=str(random.random()), 
+    # log.info("The query " + query + " is " + str(ud.name(query[0])))
+    if len(query) < 2 or (not str(ud.name(query[0])).startswith("CJK UNIFIED") and len(query) < 3):
+        wf.add_item(title='Type more characters to serach...',
+                    subtitle='too less characters will lead huge irrelevant results',
+                    arg='',
+                    uid=str(random.random()),
                     valid=True
                     )
     else:
@@ -62,12 +65,11 @@ def handle(wf, query):
             query = query.replace('title:', '')
 
         if query is None or query == '':
-            wf.add_item(title='Type keywords to serach mail ' + searchType + '...', 
-                    subtitle='too less characters will lead huge irrelevant results', 
-                    arg='', 
-                    uid=str(random.random()), 
-                    valid=True
-                    )
+            wf.add_item(title='Type keywords to search mail ' + searchType + '...',
+                        subtitle='too less characters will lead huge irrelevant results',
+                        arg='',
+                        uid=str(random.random()),
+                        valid=True)
         else:
             keywords = query.split(' ')
 
@@ -77,30 +79,47 @@ def handle(wf, query):
             configuredFolder = wf.stored_data('folder')
             folder = (int(configuredFolder) if configuredFolder else 0)
 
-            """Read in the data source and add it to the search index database"""
             # start = time()
             con = sqlite3.connect(outlookData + 'Outlook.sqlite')
-            count = 0
             cur = con.cursor()
 
             searchMethod = getattr(sys.modules[__name__], 'query' + searchType)
-            searchMethod(cur, keywords, offset, calculatedPageSize, folder)
+            searchMethod(cur, keywords, offset, calculatedPageSize + 1, folder)
 
-            if cur.rowcount:
+            resultCount = cur.rowcount
+            log.info("got " + str(resultCount) + " results found")
+
+            if resultCount:
+                count = 0
+
                 for row in cur:
-                    log.info(row[0])
-                    path = outlookData + row[3]
-                    if row[2]:
-                        content = wf.decode(row[2])
-                        content = content.replace('\r\n', " ")
-                    else:
-                        content = "no content preview"
-                    wf.add_item(title=unicode(row[0]), subtitle=unicode('[' + unicode(row[1]) + '] ' + unicode(content)), valid=True, uid=str(row[4]), arg=path, type='file')
-                page += 1        
-                wf.add_item(title='Next ' + str(calculatedPageSize) + ' results...', subtitle='click to retrieve another ' + str(calculatedPageSize) + ' results', arg=query + '|' + str(page), uid='z' + str(random.random()), valid=True)
+                    count += 1
+                    if calculatedPageSize > count:
+                        log.info(row[0])
+                        path = outlookData + row[3]
+                        if row[2]:
+                            content = wf.decode(row[2] or "")
+                            content = re.sub('[\r\n]+', ' ', content)
+                        else:
+                            content = "no content preview"
+                        wf.add_item(title=wf.decode(row[0] or ""),
+                                    subtitle=wf.decode('[' + wf.decode(row[1] or "") + '] ' + wf.decode(content or "")),
+                                    valid=True,
+                                    uid=str(row[4]),
+                                    arg=path,
+                                    type='file')
+                page += 1
+                if count > calculatedPageSize:
+                    wf.add_item(title='Next ' + str(calculatedPageSize) + ' results...',
+                                subtitle='click to retrieve another ' + str(calculatedPageSize) + ' results',
+                                modifier_subtitles={'alt': 'test'},
+                                arg=query + '|' + str(page),
+                                uid='z' + str(random.random()),
+                                valid=True)
 
             cur.close()
     wf.send_feedback()
+
 
 def queryFrom(cur, keywords, offset, pageSize, folder):
     if len(keywords) is None:
@@ -124,12 +143,13 @@ def queryFrom(cur, keywords, offset, pageSize, folder):
 
     if folder > 0:
         senderConditions += FOLDER_COND
-        variables += (folder, )
+        variables += (folder,)
 
     log.info(SELECT_STR % (senderConditions))
     log.info(variables)
 
-    res = cur.execute( SELECT_STR % (senderConditions), variables + (pageSize, offset, ))
+    res = cur.execute(SELECT_STR % (senderConditions), variables + (pageSize, offset,))
+
 
 def queryTitle(cur, keywords, offset, pageSize, folder):
     if len(keywords) is None:
@@ -153,12 +173,13 @@ def queryTitle(cur, keywords, offset, pageSize, folder):
 
     if folder > 0:
         titleConditions += FOLDER_COND
-        variables += (folder, )
+        variables += (folder,)
 
     log.info(SELECT_STR % (titleConditions))
     log.info(variables)
 
-    res = cur.execute( SELECT_STR % (titleConditions), variables + (pageSize, offset, ))
+    res = cur.execute(SELECT_STR % (titleConditions), variables + (pageSize, offset,))
+
 
 def queryAll(cur, keywords, offset, pageSize, folder):
     if len(keywords) is None:
@@ -199,13 +220,14 @@ def queryAll(cur, keywords, offset, pageSize, folder):
     variables = tuple(titleVars) + tuple(senderVars) + tuple(contentVars)
     if folder > 0:
         conditions = '(' + conditions + ')' + FOLDER_COND
-        variables += (folder, )
+        variables += (folder,)
 
     log.info(SELECT_STR % (conditions))
-    log.info(variables + (pageSize, offset, ))
+    log.info(variables + (pageSize, offset,))
 
-    res = cur.execute( SELECT_STR % (conditions), 
-        variables + (pageSize, offset, ))
+    res = cur.execute(SELECT_STR % (conditions),
+                      variables + (pageSize, offset,))
+
 
 if __name__ == '__main__':
     wf = Workflow()
