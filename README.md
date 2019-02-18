@@ -16,8 +16,12 @@ Supports multiple keywords search:
 - olk title:\[keyword1\] \[keyword2\] \[keyword3\] 
 
 You can use olkc to set some configuration for search:
-* olkc pagesize [number]
+* olkc pagesize \[number\]
 * olkc folder
+
+Powerful Pagination:
+'Next Page' if there's more pages available.
+If you are using **Alfred V3**, Press 'CTRL' on 'Next Page' item as modifier, then it behave as 'Previous Page'
 
 Download built version here:
 
