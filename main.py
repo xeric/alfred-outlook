@@ -9,8 +9,11 @@ import random
 import unicodedata as ud
 
 from workflow import Workflow
-from workflow import util
+from workflow import Workflow3
 from consts import *
+
+GITHUB_SLUG = 'xeric/alfred-outlook'
+UPDATE_FREQUENCY = 7
 
 log = None
 
@@ -48,8 +51,13 @@ def handle(wf, query):
         log.info(outlookData)
 
         # processing query
-        m = re.search(r'\|(\d+)$', query)
-        page = 0 if m is None else int(m.group(1))
+        page = 0
+        if isAlfredV2(wf):
+            m = re.search(r'\|(\d+)$', query)
+            page = 0 if m is None else int(m.group(1))
+        else:
+            page = os.getenv('page')
+            page = 0 if page is None else int(page)
         if page:
             query = query.replace('|' + str(page), '')
         log.info("query string is: " + query)
@@ -110,12 +118,33 @@ def handle(wf, query):
                                     type='file')
                 page += 1
                 if count > calculatedPageSize:
-                    wf.add_item(title='Next ' + str(calculatedPageSize) + ' results...',
-                                subtitle='click to retrieve another ' + str(calculatedPageSize) + ' results',
-                                modifier_subtitles={'alt': 'test'},
-                                arg=query + '|' + str(page),
+                    queryByVersion = query if not isAlfredV2(wf) else query + '|' + str(page)
+                    it = wf.add_item(title='More Results Available...',
+                                subtitle='click to retrieve next ' + str(calculatedPageSize) + ' results',
+                                arg=queryByVersion,
                                 uid='z' + str(random.random()),
                                 valid=True)
+                    if not isAlfredV2(wf):
+                        it.setvar('page', page)
+                        subtitle = ('no previous page', 'click to retrieve previous ' + str(calculatedPageSize) + ' results')[page > 1]
+                        previousPage = 0 if page - 2 < 0 else page - 2
+                        mod = it.add_modifier(key='ctrl',
+                                        subtitle=subtitle,
+                                        arg=queryByVersion,
+                                        valid=True)
+                        if page > 1:
+                            mod.setvar('page', previousPage)
+                else:
+                    if page > 1:
+                        previousPage = 0 if page - 2 < 0 else page - 2
+                        queryByVersion = query if not isAlfredV2(wf) else query + '|' + str(previousPage)
+                        it = wf.add_item(title='No More Results',
+                                    subtitle='click to retrieve previous ' + str(calculatedPageSize) + ' results',
+                                    arg=queryByVersion,
+                                    uid='z' + str(random.random()),
+                                    valid=True)
+                        if not isAlfredV2(wf):
+                            it.setvar('page', previousPage)
 
             cur.close()
     wf.send_feedback()
@@ -228,8 +257,24 @@ def queryAll(cur, keywords, offset, pageSize, folder):
     res = cur.execute(SELECT_STR % (conditions),
                       variables + (pageSize, offset,))
 
+def isAlfredV2(wf):
+    return wf.alfred_env['version'][0] == 2
 
 if __name__ == '__main__':
-    wf = Workflow()
+    wf = Workflow(update_settings={
+        'github_slug': GITHUB_SLUG,
+        'frequency': UPDATE_FREQUENCY
+    })
+
+    if not isAlfredV2(wf):
+        wf = Workflow3(update_settings={
+            'github_slug': GITHUB_SLUG,
+            'frequency': UPDATE_FREQUENCY
+        })
+
     log = wf.logger
+
+    if wf.update_available:
+        wf.start_update()
+
     sys.exit(wf.run(main))

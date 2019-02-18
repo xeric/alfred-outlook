@@ -21,6 +21,29 @@
 				<false/>
 			</dict>
 		</array>
+		<key>12FE396B-98F3-4852-9F22-225CE8F83E98</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>C005570F-B610-4B2F-ADC5-D1D60A6DD77F</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+			<dict>
+				<key>destinationuid</key>
+				<string>7542A242-1841-460B-913A-541F32EF0196</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
 		<key>1A19992F-4A02-44E8-8F36-16FE6A087598</key>
 		<array>
 			<dict>
@@ -48,7 +71,20 @@
 			</dict>
 			<dict>
 				<key>destinationuid</key>
-				<string>C005570F-B610-4B2F-ADC5-D1D60A6DD77F</string>
+				<string>12FE396B-98F3-4852-9F22-225CE8F83E98</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>7542A242-1841-460B-913A-541F32EF0196</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>2DB07F3A-9BF1-4FCD-B19F-0EE1232C2154</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -207,6 +243,44 @@ python main.py "$query"</string>
 		<dict>
 			<key>config</key>
 			<dict>
+				<key>inputstring</key>
+				<string>{query}</string>
+				<key>matchcasesensitive</key>
+				<false/>
+				<key>matchmode</key>
+				<integer>2</integer>
+				<key>matchstring</key>
+				<string>.*\|\d+</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.utility.filter</string>
+			<key>uid</key>
+			<string>C005570F-B610-4B2F-ADC5-D1D60A6DD77F</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>inputstring</key>
+				<string>{query}</string>
+				<key>matchcasesensitive</key>
+				<false/>
+				<key>matchmode</key>
+				<integer>2</integer>
+				<key>matchstring</key>
+				<string>^(?!.*[.]olk15Message$).*$</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.utility.filter</string>
+			<key>uid</key>
+			<string>12FE396B-98F3-4852-9F22-225CE8F83E98</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
 				<key>externaltriggerid</key>
 				<string>olkTrigger</string>
 				<key>passinputasargument</key>
@@ -227,18 +301,18 @@ python main.py "$query"</string>
 			<key>config</key>
 			<dict>
 				<key>inputstring</key>
-				<string>{query}</string>
+				<string>{var:page}</string>
 				<key>matchcasesensitive</key>
 				<false/>
 				<key>matchmode</key>
 				<integer>2</integer>
 				<key>matchstring</key>
-				<string>.*\|\d+</string>
+				<string>^\d+$</string>
 			</dict>
 			<key>type</key>
 			<string>alfred.workflow.utility.filter</string>
 			<key>uid</key>
-			<string>C005570F-B610-4B2F-ADC5-D1D60A6DD77F</string>
+			<string>7542A242-1841-460B-913A-541F32EF0196</string>
 			<key>version</key>
 			<integer>1</integer>
 		</dict>
@@ -346,16 +420,23 @@ Mail content search is based on preview content, not full text of mail, so will 
 		<key>00572759-3F3D-45D5-B281-6C3A33F76317</key>
 		<dict>
 			<key>xpos</key>
-			<integer>490</integer>
+			<integer>570</integer>
 			<key>ypos</key>
 			<integer>190</integer>
 		</dict>
 		<key>0B63B674-D674-4D94-B97A-9D8122956F48</key>
 		<dict>
 			<key>xpos</key>
-			<integer>630</integer>
+			<integer>700</integer>
 			<key>ypos</key>
 			<integer>440</integer>
+		</dict>
+		<key>12FE396B-98F3-4852-9F22-225CE8F83E98</key>
+		<dict>
+			<key>xpos</key>
+			<integer>450</integer>
+			<key>ypos</key>
+			<integer>280</integer>
 		</dict>
 		<key>1A19992F-4A02-44E8-8F36-16FE6A087598</key>
 		<dict>
@@ -367,14 +448,14 @@ Mail content search is based on preview content, not full text of mail, so will 
 		<key>2DB07F3A-9BF1-4FCD-B19F-0EE1232C2154</key>
 		<dict>
 			<key>xpos</key>
-			<integer>630</integer>
+			<integer>700</integer>
 			<key>ypos</key>
 			<integer>280</integer>
 		</dict>
 		<key>407DC3A9-37B0-43BD-85A4-1CC8740BF2D1</key>
 		<dict>
 			<key>xpos</key>
-			<integer>630</integer>
+			<integer>700</integer>
 			<key>ypos</key>
 			<integer>140</integer>
 		</dict>
@@ -384,6 +465,13 @@ Mail content search is based on preview content, not full text of mail, so will 
 			<integer>260</integer>
 			<key>ypos</key>
 			<integer>210</integer>
+		</dict>
+		<key>7542A242-1841-460B-913A-541F32EF0196</key>
+		<dict>
+			<key>xpos</key>
+			<integer>570</integer>
+			<key>ypos</key>
+			<integer>340</integer>
 		</dict>
 		<key>AC03960B-EBAE-4D3B-898B-E74009E31C9F</key>
 		<dict>
@@ -395,9 +483,9 @@ Mail content search is based on preview content, not full text of mail, so will 
 		<key>C005570F-B610-4B2F-ADC5-D1D60A6DD77F</key>
 		<dict>
 			<key>xpos</key>
-			<integer>490</integer>
+			<integer>570</integer>
 			<key>ypos</key>
-			<integer>290</integer>
+			<integer>270</integer>
 		</dict>
 		<key>D46C9EAB-A6BD-47D9-8189-2DB13965832D</key>
 		<dict>
@@ -408,7 +496,7 @@ Mail content search is based on preview content, not full text of mail, so will 
 		</dict>
 	</dict>
 	<key>version</key>
-	<string>0.0.8</string>
+	<string>0.1.0</string>
 	<key>webaddress</key>
 	<string>https://github.com/xeric/alfred-outlook</string>
 </dict>
