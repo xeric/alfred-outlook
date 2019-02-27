@@ -87,8 +87,11 @@ def prepareFolders():
 
     homePath = os.environ['HOME']
 
+    profile = wf.stored_data(KEY_PROFILE) or OUTLOOK_DEFAULT_PROFILE
+
     # outlookData = homePath + '/outlook/'
-    outlookData = homePath + OUTLOOK_DATA_PATH
+    outlookData = homePath + OUTLOOK_DATA_PARENT + profile + OUTLOOK_DATA_FOLDER
+    log.info(outlookData)
 
     con = sqlite3.connect(outlookData + 'Outlook.sqlite')
     count = 0
