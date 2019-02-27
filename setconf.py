@@ -21,22 +21,22 @@ def handle(query):
     query = unicode(query, 'utf-8')
 
     validQuery = False
+    key = None
+    val = None
     for rule in RULES:
-        if re.match(rule, query) is not None:
+        m = re.match(rule, query)
+        if m is not None:
             validQuery = True
+            key = m.group(1)
+            val = m.group(2)
             break
     if not validQuery:
         notify('Error', query + ' is not a valid configuration!')
         return
 
-    query.replace(r'\s+', ' ')
-    kvPair = query.split(' ')
-
-    key = kvPair[0]
-    val = kvPair[1]
-
-    wf.store_data(key, val)
-    notify('Set Configuration Successfully', 'Set ' + key + " to " + val + " complete!")
+    if key is not None:
+        wf.store_data(key, val)
+        notify('Set Configuration Successfully', 'Set ' + key + " to " + val + " complete!")
 
 if __name__ == '__main__':
     wf = Workflow()

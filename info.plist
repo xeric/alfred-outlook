@@ -375,7 +375,7 @@ python conf.py "$query"</string>
 				<key>scriptfile</key>
 				<string></string>
 				<key>subtext</key>
-				<string>pagesize, folder ...</string>
+				<string>pagesize, folder, profile ...</string>
 				<key>title</key>
 				<string>Configre Outlook Search</string>
 				<key>type</key>
@@ -496,7 +496,7 @@ Mail content search is based on preview content, not full text of mail, so will 
 		</dict>
 	</dict>
 	<key>version</key>
-	<string>0.1.0</string>
+	<string>0.1.1</string>
 	<key>webaddress</key>
 	<string>https://github.com/xeric/alfred-outlook</string>
 </dict>

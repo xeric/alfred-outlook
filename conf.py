@@ -27,6 +27,9 @@ def handle(query):
                 if query == KEY_FOLDER:
                     hasOption = True
                     prepareFolders()
+                elif query == KEY_PROFILE:
+                    hasOption = True
+                    prepareProfile()
                 else:
                     hasOption = True
                     option = key + ' ' + ALL_VALS[i]
@@ -110,6 +113,21 @@ def prepareFolders():
                 )
 
     cur.close()
+
+def prepareProfile():
+    homePath = os.environ['HOME']
+
+    parent = homePath + OUTLOOK_DATA_PARENT
+    profiles = os.listdir(parent)
+    for profile in profiles:
+        if not profile.startswith('.'):
+            wf.add_item(
+                    title=unicode(profile), 
+                    subtitle='Set profile as: ' + unicode(profile), 
+                    valid=True, 
+                    uid='profile ' + str(profile), 
+                    arg='profile ' + str(profile), 
+                    )
 
 if __name__ == '__main__':
     wf = Workflow()
