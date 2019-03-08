@@ -26,6 +26,16 @@ Powerful Pagination:
 * 'Next Page' if there's more pages available.
 * If you are using **Alfred V3**, Press 'CTRL' on 'Next Page' item as modifier, then it behave as 'Previous Page'
 
+Compose a new mail
+* olknew \[optional: email address\]
+
+Search Contact (Person)
+* olkp \[keyword\]
+   * it will search contacts by display name and email address
+   * for found results
+     * you can select to open contact pane in Outlook
+     * If you are using **Alfred V3**, Press 'CTRL' on selected contact for composing a new mail to contact in Outlook
+
 Download built version here:
 
 https://github.com/xeric/alfred-outlook/releases

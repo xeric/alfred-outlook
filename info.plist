@@ -44,6 +44,29 @@
 				<false/>
 			</dict>
 		</array>
+		<key>19EF2931-C9D3-4C7E-AC1F-DD448D4C7BC6</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>B57E710F-DC5A-409C-A180-FD3509580992</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+			<dict>
+				<key>destinationuid</key>
+				<string>BDA1DBAF-FF52-4C96-9310-C6A7BB563E41</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
 		<key>1A19992F-4A02-44E8-8F36-16FE6A087598</key>
 		<array>
 			<dict>
@@ -93,11 +116,50 @@
 				<false/>
 			</dict>
 		</array>
+		<key>ABD5F5C9-E124-4CFF-A7E3-B2DFF62C1F45</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>CF833D44-899F-4B3A-8205-042C53233EAA</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
 		<key>AC03960B-EBAE-4D3B-898B-E74009E31C9F</key>
 		<array>
 			<dict>
 				<key>destinationuid</key>
 				<string>D46C9EAB-A6BD-47D9-8189-2DB13965832D</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>B57E710F-DC5A-409C-A180-FD3509580992</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>95DA09E8-1CEB-44EA-A75E-97887AF52D94</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>BDA1DBAF-FF52-4C96-9310-C6A7BB563E41</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>ABD5F5C9-E124-4CFF-A7E3-B2DFF62C1F45</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -319,31 +381,6 @@ python main.py "$query"</string>
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>concurrently</key>
-				<false/>
-				<key>escaping</key>
-				<integer>102</integer>
-				<key>script</key>
-				<string>query=$1
-
-python setconf.py "$query"</string>
-				<key>scriptargtype</key>
-				<integer>1</integer>
-				<key>scriptfile</key>
-				<string></string>
-				<key>type</key>
-				<integer>0</integer>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.action.script</string>
-			<key>uid</key>
-			<string>0B63B674-D674-4D94-B97A-9D8122956F48</string>
-			<key>version</key>
-			<integer>2</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
 				<key>alfredfiltersresults</key>
 				<false/>
 				<key>alfredfiltersresultsmatchmode</key>
@@ -393,6 +430,31 @@ python conf.py "$query"</string>
 		<dict>
 			<key>config</key>
 			<dict>
+				<key>concurrently</key>
+				<false/>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>script</key>
+				<string>query=$1
+
+python setconf.py "$query"</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>type</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>0B63B674-D674-4D94-B97A-9D8122956F48</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
 				<key>argument</key>
 				<string>'{query}', {allvars}</string>
 				<key>cleardebuggertext</key>
@@ -407,6 +469,145 @@ python conf.py "$query"</string>
 			<key>version</key>
 			<integer>1</integer>
 		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>openwith</key>
+				<string>/Applications/Microsoft Outlook.app</string>
+				<key>sourcefile</key>
+				<string></string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.openfile</string>
+			<key>uid</key>
+			<string>95DA09E8-1CEB-44EA-A75E-97887AF52D94</string>
+			<key>version</key>
+			<integer>3</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>inputstring</key>
+				<string>{query}</string>
+				<key>matchcasesensitive</key>
+				<false/>
+				<key>matchmode</key>
+				<integer>2</integer>
+				<key>matchstring</key>
+				<string>olk15Contact$</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.utility.filter</string>
+			<key>uid</key>
+			<string>B57E710F-DC5A-409C-A180-FD3509580992</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>alfredfiltersresults</key>
+				<false/>
+				<key>alfredfiltersresultsmatchmode</key>
+				<integer>0</integer>
+				<key>argumenttrimmode</key>
+				<integer>0</integer>
+				<key>argumenttype</key>
+				<integer>0</integer>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>keyword</key>
+				<string>olkp</string>
+				<key>queuedelaycustom</key>
+				<integer>3</integer>
+				<key>queuedelayimmediatelyinitially</key>
+				<true/>
+				<key>queuedelaymode</key>
+				<integer>0</integer>
+				<key>queuemode</key>
+				<integer>1</integer>
+				<key>runningsubtext</key>
+				<string>Searching...</string>
+				<key>script</key>
+				<string># encoding: utf-8
+query=$1
+
+python contact.py "$query"</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>subtext</key>
+				<string>email or contact name</string>
+				<key>title</key>
+				<string>Seach Outlook Contact (Person)</string>
+				<key>type</key>
+				<integer>0</integer>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.scriptfilter</string>
+			<key>uid</key>
+			<string>19EF2931-C9D3-4C7E-AC1F-DD448D4C7BC6</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>inputstring</key>
+				<string>{query}</string>
+				<key>matchcasesensitive</key>
+				<false/>
+				<key>matchmode</key>
+				<integer>2</integer>
+				<key>matchstring</key>
+				<string>[\w-]+@([\w-]+\.)+[\w-]+</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.utility.filter</string>
+			<key>uid</key>
+			<string>BDA1DBAF-FF52-4C96-9310-C6A7BB563E41</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argumenttype</key>
+				<integer>1</integer>
+				<key>keyword</key>
+				<string>olknew</string>
+				<key>subtext</key>
+				<string>New Message in Outlook</string>
+				<key>text</key>
+				<string>New Mail</string>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.keyword</string>
+			<key>uid</key>
+			<string>ABD5F5C9-E124-4CFF-A7E3-B2DFF62C1F45</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>applescript</key>
+				<string># thanks for a scripts inspire me in a workflow with no author in interneton alfred_script(q)			tell application "Microsoft Outlook"		activate		set newMessage to make new outgoing message		if q is not "" then			make new recipient at newMessage with properties {email address:{address:q}}		end if		open newMessage	end tellend alfred_script</string>
+				<key>cachescript</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.applescript</string>
+			<key>uid</key>
+			<string>CF833D44-899F-4B3A-8205-042C53233EAA</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
 	</array>
 	<key>readme</key>
 	<string>This workflow used for searching Outlook Mail on Mac, support Mac Outlook Version 16.
@@ -414,7 +615,10 @@ You can search by keyword on Subject, Sender and Content of Mail.
 By default, it search all of three above, and for seaching single item, you can use:
 olk title:[keyword]
 olk from:[keyword]
-Mail content search is based on preview content, not full text of mail, so will not provide a single search item for it due to valueless in accurate search.</string>
+Mail content search is based on preview content, not full text of mail, so will not provide a single search item for it due to valueless in accurate search.
+
+for more information, please go to:
+https://github.com/xeric/alfred-outlook</string>
 	<key>uidata</key>
 	<dict>
 		<key>00572759-3F3D-45D5-B281-6C3A33F76317</key>
@@ -437,6 +641,13 @@ Mail content search is based on preview content, not full text of mail, so will 
 			<integer>450</integer>
 			<key>ypos</key>
 			<integer>280</integer>
+		</dict>
+		<key>19EF2931-C9D3-4C7E-AC1F-DD448D4C7BC6</key>
+		<dict>
+			<key>xpos</key>
+			<integer>250</integer>
+			<key>ypos</key>
+			<integer>680</integer>
 		</dict>
 		<key>1A19992F-4A02-44E8-8F36-16FE6A087598</key>
 		<dict>
@@ -473,12 +684,40 @@ Mail content search is based on preview content, not full text of mail, so will 
 			<key>ypos</key>
 			<integer>340</integer>
 		</dict>
+		<key>95DA09E8-1CEB-44EA-A75E-97887AF52D94</key>
+		<dict>
+			<key>xpos</key>
+			<integer>700</integer>
+			<key>ypos</key>
+			<integer>590</integer>
+		</dict>
+		<key>ABD5F5C9-E124-4CFF-A7E3-B2DFF62C1F45</key>
+		<dict>
+			<key>xpos</key>
+			<integer>530</integer>
+			<key>ypos</key>
+			<integer>770</integer>
+		</dict>
 		<key>AC03960B-EBAE-4D3B-898B-E74009E31C9F</key>
 		<dict>
 			<key>xpos</key>
 			<integer>260</integer>
 			<key>ypos</key>
 			<integer>440</integer>
+		</dict>
+		<key>B57E710F-DC5A-409C-A180-FD3509580992</key>
+		<dict>
+			<key>xpos</key>
+			<integer>520</integer>
+			<key>ypos</key>
+			<integer>620</integer>
+		</dict>
+		<key>BDA1DBAF-FF52-4C96-9310-C6A7BB563E41</key>
+		<dict>
+			<key>xpos</key>
+			<integer>440</integer>
+			<key>ypos</key>
+			<integer>770</integer>
 		</dict>
 		<key>C005570F-B610-4B2F-ADC5-D1D60A6DD77F</key>
 		<dict>
@@ -487,16 +726,23 @@ Mail content search is based on preview content, not full text of mail, so will 
 			<key>ypos</key>
 			<integer>270</integer>
 		</dict>
+		<key>CF833D44-899F-4B3A-8205-042C53233EAA</key>
+		<dict>
+			<key>xpos</key>
+			<integer>700</integer>
+			<key>ypos</key>
+			<integer>770</integer>
+		</dict>
 		<key>D46C9EAB-A6BD-47D9-8189-2DB13965832D</key>
 		<dict>
 			<key>xpos</key>
-			<integer>490</integer>
+			<integer>520</integer>
 			<key>ypos</key>
 			<integer>470</integer>
 		</dict>
 	</dict>
 	<key>version</key>
-	<string>0.1.2</string>
+	<string>0.1.3</string>
 	<key>webaddress</key>
 	<string>https://github.com/xeric/alfred-outlook</string>
 </dict>
