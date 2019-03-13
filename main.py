@@ -12,6 +12,8 @@ from workflow import Workflow
 from workflow import Workflow3
 from consts import *
 
+from util import Util
+
 GITHUB_SLUG = 'xeric/alfred-outlook'
 UPDATE_FREQUENCY = 7
 
@@ -37,7 +39,7 @@ def main(wf):
 def handle(wf, query):
     # log.info("The query " + query + " is " + str(ud.name(query[0])))
     if len(query) < 2 or (not str(ud.name(query[0])).startswith("CJK UNIFIED") and len(query) < 3):
-        wf.add_item(title='Type more characters to serach...',
+        wf.add_item(title='Type more characters to search...',
                     subtitle='too less characters will lead huge irrelevant results',
                     arg='',
                     uid=str(random.random()),
@@ -46,13 +48,21 @@ def handle(wf, query):
     else:
         homePath = os.environ['HOME']
 
+        storedProfle = wf.stored_data(KEY_PROFILE)
+        # set default profile to improve user experience
+        if storedProfle is None:
+            log.info("stored profile is empty, try to get new one!")
+            Util.configureDefaultProfile(wf)
+        else:
+            log.info("configured profile is" + storedProfle)
+
         profile = wf.stored_data(KEY_PROFILE) or OUTLOOK_DEFAULT_PROFILE
 
         # outlookData = homePath + '/outlook/'
         outlookData = homePath + OUTLOOK_DATA_PARENT + profile + OUTLOOK_DATA_FOLDER
         log.info(outlookData)
 
-        if not validateProfile(outlookData):
+        if not Util.validateProfile(outlookData):
             wf.add_item(title='Profile: ' + profile + ' is not valid...',
                         subtitle='please use olkc profile to switch profile',
                         arg='olkc profile ',
@@ -61,7 +71,7 @@ def handle(wf, query):
         else :
             # processing query
             page = 0
-            if isAlfredV2(wf):
+            if Util.isAlfredV2(wf):
                 m = re.search(r'\|(\d+)$', query)
                 page = 0 if m is None else int(m.group(1))
             else:
@@ -127,13 +137,13 @@ def handle(wf, query):
                                         type='file')
                     page += 1
                     if count > calculatedPageSize:
-                        queryByVersion = query if not isAlfredV2(wf) else query + '|' + str(page)
+                        queryByVersion = query if not Util.isAlfredV2(wf) else query + '|' + str(page)
                         it = wf.add_item(title='More Results Available...',
                                     subtitle='click to retrieve next ' + str(calculatedPageSize) + ' results',
                                     arg=queryByVersion,
                                     uid='z' + str(random.random()),
                                     valid=True)
-                        if not isAlfredV2(wf):
+                        if not Util.isAlfredV2(wf):
                             it.setvar('page', page)
                             subtitle = ('no previous page', 'click to retrieve previous ' + str(calculatedPageSize) + ' results')[page > 1]
                             previousPage = 0 if page - 2 < 0 else page - 2
@@ -146,13 +156,13 @@ def handle(wf, query):
                     else:
                         if page > 1:
                             previousPage = 0 if page - 2 < 0 else page - 2
-                            queryByVersion = query if not isAlfredV2(wf) else query + '|' + str(previousPage)
+                            queryByVersion = query if not Util.isAlfredV2(wf) else query + '|' + str(previousPage)
                             it = wf.add_item(title='No More Results',
                                         subtitle='click to retrieve previous ' + str(calculatedPageSize) + ' results',
                                         arg=queryByVersion,
                                         uid='z' + str(random.random()),
                                         valid=True)
-                            if not isAlfredV2(wf):
+                            if not Util.isAlfredV2(wf):
                                 it.setvar('page', previousPage)
 
                 cur.close()
@@ -263,14 +273,8 @@ def queryAll(cur, keywords, offset, pageSize, folder):
     log.info(SELECT_STR % (conditions))
     log.info(variables + (pageSize, offset,))
 
-    res = cur.execute(SELECT_STR % (conditions),
-                      variables + (pageSize, offset,))
+    cur.execute(SELECT_STR % (conditions), variables + (pageSize, offset,))
 
-def isAlfredV2(wf):
-    return wf.alfred_env['version'][0] == 2
-
-def validateProfile(path):
-    return os.path.isfile(path + OUTLOOK_SQLITE_FILE)
 
 if __name__ == '__main__':
     wf = Workflow(update_settings={
@@ -278,7 +282,7 @@ if __name__ == '__main__':
         'frequency': UPDATE_FREQUENCY
     })
 
-    if not isAlfredV2(wf):
+    if not Util.isAlfredV2(wf):
         wf = Workflow3(update_settings={
             'github_slug': GITHUB_SLUG,
             'frequency': UPDATE_FREQUENCY

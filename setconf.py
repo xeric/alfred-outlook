@@ -2,7 +2,6 @@
 from __future__ import print_function, unicode_literals
 
 import sys
-import os
 import re
 
 from workflow import Workflow
@@ -11,15 +10,15 @@ from consts import *
 
 log = None
 
+
 def main(wf):
-    query = sys.argv[1]
+    query = wf.decode(sys.argv[1])
     log.info(query)
 
     handle(query)
 
-def handle(query):
-    query = unicode(query, 'utf-8')
 
+def handle(query):
     validQuery = False
     key = None
     val = None
@@ -37,6 +36,7 @@ def handle(query):
     if key is not None:
         wf.store_data(key, val)
         notify('Set Configuration Successfully', 'Set ' + key + " to " + val + " complete!")
+
 
 if __name__ == '__main__':
     wf = Workflow()

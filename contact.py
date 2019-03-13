@@ -11,6 +11,7 @@ import workflow
 from workflow import Workflow
 from workflow import Workflow3
 from consts import *
+from util import Util
 
 GITHUB_SLUG = 'xeric/alfred-outlook'
 UPDATE_FREQUENCY = 7
@@ -83,7 +84,7 @@ def main(wf):
 
 def handle(wf, query):
     if len(query) < 1 or (not str(ud.name(query[0])).startswith("CJK UNIFIED") and len(query) < 2):
-        wf.add_item(title='Type more characters to serach...',
+        wf.add_item(title='Type more characters to search...',
                     subtitle='too less characters will lead huge irrelevant results',
                     arg='',
                     uid=str(random.random()),
@@ -107,7 +108,7 @@ def handle(wf, query):
         outlookData = homePath + OUTLOOK_DATA_PARENT + profile + OUTLOOK_DATA_FOLDER
         log.info(outlookData)
 
-        if not validateProfile(outlookData):
+        if not Util.validateProfile(outlookData):
             wf.add_item(title='Profile: ' + profile + ' is not valid...',
                         subtitle='please use olkc profile to switch profile',
                         arg='olkc profile ',
@@ -160,7 +161,7 @@ def handle(wf, query):
                                  uid=str(contact[0]),
                                  arg=path or email,
                                  type='file' if path else "")
-                if not isAlfredV2(wf):
+                if not Util.isAlfredV2(wf):
                     mod = it.add_modifier(key='ctrl',
                                           subtitle="Compose a mail to " + email,
                                           arg=email,
@@ -184,21 +185,13 @@ def fillContacts(contacts, path, name, id):
             contacts[i][3] = path
 
 
-def isAlfredV2(wf):
-    return wf.alfred_env['version'][0] == 2
-
-
-def validateProfile(path):
-    return os.path.isfile(path + OUTLOOK_SQLITE_FILE)
-
-
 if __name__ == '__main__':
     wf = Workflow(update_settings={
         'github_slug': GITHUB_SLUG,
         'frequency': UPDATE_FREQUENCY
     })
 
-    if not isAlfredV2(wf):
+    if not Util.isAlfredV2(wf):
         wf = Workflow3(update_settings={
             'github_slug': GITHUB_SLUG,
             'frequency': UPDATE_FREQUENCY

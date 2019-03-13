@@ -10,14 +10,15 @@ from consts import *
 
 log = None
 
+
 def main(wf):
-    query = sys.argv[1]
-    log.info(query)
+    query = wf.decode(sys.argv[1])
+    log.info(wf, query)
 
-    handle(query)
+    handle(wf, query)
 
-def handle(query):
-    query = unicode(query, 'utf-8')
+
+def handle(wf, query):
     query = query.strip()
 
     if re.match(r'\S+\s+\S+', query) is None:

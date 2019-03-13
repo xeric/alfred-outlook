@@ -1,4 +1,4 @@
-#coding:utf-8
+# coding:utf-8
 PAGE_SIZE = 20
 # OUTLOOK_DATA_PATH = r'/Library/Group Containers/UBF8T346G9.Office/Outlook/Outlook 15 Profiles/Main Profile/Data/'
 OUTLOOK_DATA_PARENT = r'/Library/Group Containers/UBF8T346G9.Office/Outlook/Outlook 15 Profiles/'
