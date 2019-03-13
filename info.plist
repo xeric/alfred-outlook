@@ -597,7 +597,18 @@ python contact.py "$query"</string>
 			<key>config</key>
 			<dict>
 				<key>applescript</key>
-				<string># thanks for a scripts inspire me in a workflow with no author in interneton alfred_script(q)			tell application "Microsoft Outlook"		activate		set newMessage to make new outgoing message		if q is not "" then			make new recipient at newMessage with properties {email address:{address:q}}		end if		open newMessage	end tellend alfred_script</string>
+				<string># thanks for a scripts inspire me in a workflow with no author in internet
+
+on alfred_script(q)		
+	tell application "Microsoft Outlook"
+		activate
+		set newMessage to make new outgoing message
+		if q is not "" then
+			make new recipient at newMessage with properties {email address:{address:q}}
+		end if
+		open newMessage
+	end tell
+end alfred_script</string>
 				<key>cachescript</key>
 				<false/>
 			</dict>
@@ -742,7 +753,7 @@ https://github.com/xeric/alfred-outlook</string>
 		</dict>
 	</dict>
 	<key>version</key>
-	<string>0.1.3</string>
+	<string>0.1.4</string>
 	<key>webaddress</key>
 	<string>https://github.com/xeric/alfred-outlook</string>
 </dict>
