@@ -16,11 +16,11 @@ Supports multiple keywords search:
 - olk title:\[keyword1\] \[keyword2\] \[keyword3\] 
 
 You can use olkc to set some configuration for search:
+* olkc profile
+  * it will list all available profiles (account) in your outlook, then select one as your preferred
 * olkc pagesize \[number\]
 * olkc folder
   * it will list all available folders in your outlook account, then select one as your default search target
-* olkc profile
-  * it will list all available profiles (account) in your outlook, then select one as your preferred
 
 Powerful Pagination:
 * 'Next Page' if there's more pages available.
