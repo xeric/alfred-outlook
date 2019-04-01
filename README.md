@@ -24,15 +24,15 @@ This workflow supports searching:
 By default, it will search all three above togther, you can figure out which single item you want to search with below format:
 
     olk from:{keyword}
-or
-
+<h>
+    
     olk title:{keyword}
 
 Supports multiple keywords search:
 
     olk {keyword1} {keyword2} {keyword3}
 
-or
+<h>
 
     olk title:{keyword1} {keyword2} {keyword3}
 
