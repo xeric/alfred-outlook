@@ -31,7 +31,6 @@ By default, it will search all three above togther, you can figure out which sin
 Supports multiple keywords search:
 
     olk {keyword1} {keyword2} {keyword3}
-
 <h>
 
     olk title:{keyword1} {keyword2} {keyword3}
@@ -66,8 +65,8 @@ You can use olkc to set some configurations for search:
 
 
  >it will search contacts by display name and email address.
- >> * for found results, you can select to open contact pane in Outlook.
- >> * If you are using **Alfred V3**, Press 'CTRL' on selected contact for composing a new mail to contact in Outlook
+ > * for found results, you can select to open contact pane in Outlook.
+ > * If you are using **Alfred V3**, Press 'CTRL' on selected contact for composing a new mail to contact in Outlook
 
 ## Download built version here:
 
