@@ -14,7 +14,7 @@ Alfred outlook mail search
 
 This is an Alfred Workflow for searching Microsoft Outlook Version 16 and later.
 
-##Command olk - search email
+## Command olk - search email
 
 This workflow supports searching:
 - Mail Subject
@@ -36,11 +36,11 @@ or
 
     olk title:{keyword1} {keyword2} {keyword3}
 
-###This workflow search result supports Powerful Pagination:
+### This workflow search result supports Powerful Pagination:
 > * 'Next Page' if there's more pages available.
 > * If you are using **Alfred V3**, Press 'CTRL' on 'Next Page' item as modifier, then it behave as 'Previous Page'
 
-##Command olkc - configuration
+## Command olkc - configuration
 
 You can use olkc to set some configurations for search:
 
@@ -53,14 +53,14 @@ You can use olkc to set some configurations for search:
     olkc profile
 >It will list all available profiles (account) in your outlook, then select one as your preferred
 
-##Command olknew - Compose a new mail
+## Command olknew - Compose a new mail
 
     olknew {optional: email address}
 
 
 >if email address is not assigned, this will new an Outlook compose mail window without receiver, otherwise email address will be set as receiver.
 
-##Command olkp - Search Contact (Person)
+## Command olkp - Search Contact (Person)
 
     olkp {keyword}
 
@@ -69,6 +69,6 @@ You can use olkc to set some configurations for search:
  >> * for found results, you can select to open contact pane in Outlook.
  >> * If you are using **Alfred V3**, Press 'CTRL' on selected contact for composing a new mail to contact in Outlook
 
-##Download built version here:
+## Download built version here:
 
 https://github.com/xeric/alfred-outlook/releases
