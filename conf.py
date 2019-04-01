@@ -13,7 +13,7 @@ log = None
 
 def main(wf):
     query = wf.decode(sys.argv[1])
-    log.info(wf, query)
+    log.info(query)
 
     handle(wf, query)
 
