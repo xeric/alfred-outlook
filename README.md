@@ -1,18 +1,11 @@
 # alfred-outlook
-Alfred outlook mail search
-
-<table style="padding: 5px; widt: 50%;">
-    <tr>
-        <td>
-        olk &#124; olkp &#124; olknew &#124; olkc
-        </td>
-    </tr>
-</table>
-
-
-----------------------------------------
+***Alfred outlook mail search***
 
 This is an Alfred Workflow for searching Microsoft Outlook Version 16 and later.
+```
+olk | olkp | olknew | olkc
+```
+----------------------------------------
 
 ## Command olk - search email
 
