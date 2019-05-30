@@ -7,6 +7,7 @@ import sqlite3
 import re
 import random
 import unicodedata as ud
+from datetime import date, timedelta
 
 from workflow import Workflow
 from workflow import Workflow3
@@ -84,12 +85,16 @@ def handle(wf, query):
 
             searchType = 'All'
 
+            originalQuery = query
             if query.startswith('from:'):
                 searchType = 'From'
                 query = query.replace('from:', '')
             elif query.startswith('title:'):
                 searchType = 'Title'
                 query = query.replace('title:', '')
+            elif query.startswith('recent:'):
+                searchType = 'Recent'
+                query = query.replace('recent:', '')
 
             if query is None or query == '':
                 wf.add_item(title='Type keywords to search mail ' + searchType + '...',
@@ -121,7 +126,7 @@ def handle(wf, query):
 
                     for row in cur:
                         count += 1
-                        if calculatedPageSize > count:
+                        if calculatedPageSize + 1 > count:
                             log.info(row[0])
                             path = outlookData + row[3]
                             if row[2]:
@@ -137,7 +142,7 @@ def handle(wf, query):
                                         type='file')
                     page += 1
                     if count > calculatedPageSize:
-                        queryByVersion = query if not Util.isAlfredV2(wf) else query + '|' + str(page)
+                        queryByVersion = originalQuery if not Util.isAlfredV2(wf) else originalQuery + '|' + str(page)
                         it = wf.add_item(title='More Results Available...',
                                     subtitle='click to retrieve next ' + str(calculatedPageSize) + ' results',
                                     arg=queryByVersion,
@@ -156,7 +161,7 @@ def handle(wf, query):
                     else:
                         if page > 1:
                             previousPage = 0 if page - 2 < 0 else page - 2
-                            queryByVersion = query if not Util.isAlfredV2(wf) else query + '|' + str(previousPage)
+                            queryByVersion = originalQuery if not Util.isAlfredV2(wf) else originalQuery + '|' + str(previousPage)
                             it = wf.add_item(title='No More Results',
                                         subtitle='click to retrieve previous ' + str(calculatedPageSize) + ' results',
                                         arg=queryByVersion,
@@ -229,8 +234,19 @@ def queryTitle(cur, keywords, offset, pageSize, folder):
     res = cur.execute(SELECT_STR % (titleConditions), variables + (pageSize, offset,))
 
 
-def queryAll(cur, keywords, offset, pageSize, folder):
-    if len(keywords) is None:
+def queryRecent(cur, keywords, offset, pageSize, folder):
+    top = 10
+
+    if len(keywords) is not None:
+        if (keywords[0].isnumeric()):
+            top = int(keywords[0])
+        elif (keywords[0] == 'today'):
+            top = -1000
+
+    queryAll(cur, keywords[1:], offset, pageSize, folder, top)
+
+def queryAll(cur, keywords, offset, pageSize, folder, top = -1):
+    if len(keywords) == 0 and top == -1:
         return
     log.info("query by subject, content and sender")
     log.info(keywords)
@@ -241,6 +257,7 @@ def queryAll(cur, keywords, offset, pageSize, folder):
     titleVars = []
     senderVars = []
     contentVars = []
+    conditions = None
 
     for kw in keywords:
         titleVars.append('%' + kw + '%')
@@ -259,16 +276,39 @@ def queryAll(cur, keywords, offset, pageSize, folder):
         else:
             contentConditions += 'AND Message_Preview LIKE ? '
 
-    titleConditions += ') '
-    senderConditions += ') '
-    contentConditions += ') '
+    if keywords:
+        titleConditions += ') '
+        senderConditions += ') '
+        contentConditions += ') '
 
-    conditions = titleConditions + senderConditions + contentConditions
+        conditions = titleConditions + senderConditions + contentConditions
 
     variables = tuple(titleVars) + tuple(senderVars) + tuple(contentVars)
     if folder > 0:
         conditions = '(' + conditions + ')' + FOLDER_COND
         variables += (folder,)
+
+    # calculate offset by top value
+    # log.info("top: %d, pageSize: %d, offset: %d" % (top, pageSize, offset))
+    if top > 0:
+        if top > (pageSize - 1):
+            if top < (pageSize - 1) + offset:
+                pageSize = top - offset
+        else:
+            pageSize = top
+
+        #append read flag
+        if conditions is None:
+            conditions = "Message_ReadFlag = 0 "
+        else:
+            conditions += " AND Message_ReadFlag = 0 "
+    elif top == -1000:
+        variables += (int(date.today().strftime('%s')),)
+        if conditions is None:
+            conditions = "Message_TimeReceived > ? AND Message_ReadFlag = 0 "
+        else:
+            conditions += " AND Message_TimeReceived > ? AND Message_ReadFlag = 0 "
+
 
     log.info(SELECT_STR % (conditions))
     log.info(variables + (pageSize, offset,))

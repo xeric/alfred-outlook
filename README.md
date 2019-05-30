@@ -7,14 +7,14 @@ olk | olkp | olknew | olkc
 ```
 ----------------------------------------
 
-## Command olk - search email
+## Command olk - Search email
 
 This workflow supports searching:
 - Mail Subject
 - Mail Sender
 - Mail Preview Content
 
-By default, it will search all three above togther, you can figure out which single item you want to search with below format:
+By default, it will search all three above together, you can figure out which single item you want to search with below format:
 
     olk from:{keyword}
 <h>
@@ -28,11 +28,23 @@ Supports multiple keywords search:
 
     olk title:{keyword1} {keyword2} {keyword3}
 
+It also support get last {n} unread mail quickly:
+
+    olk recent:10
+
+or just get today's unread mail:
+
+    olk recent:today
+
+You can also apply some simple keywords filter on it:
+
+    olk recent:30 {keyword1} {keyword2} 
+
 ### This workflow search result supports Powerful Pagination:
 > * 'Next Page' if there's more pages available.
 > * If you are using **Alfred V3**, Press 'CTRL' on 'Next Page' item as modifier, then it behave as 'Previous Page'
 
-## Command olkc - configuration
+## Command olkc - Configuration
 
 You can use olkc to set some configurations for search:
 
