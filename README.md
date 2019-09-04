@@ -61,8 +61,18 @@ You can use olkc to set some configurations for search:
 
     olknew {optional: email address}
 
+There are two mode of compose a new mail in plugin, activate Outlook App window mode and inline mode (If you are using **Alfred V3**).
 
->if email address is not assigned, this will new an Outlook compose mail window without receiver, otherwise email address will be set as receiver.
+If you are using **Alfred V3**,
+to use inline mode, after you type a email address after olknew command, you can choose: 'Send a Direct Quick Mesaage', and you can type a message after hint 'Message: ' then send it without activating Outlook App window.
+
+> if you are first time using this feature, and when you send a mail through inline mode, you will get a popup warning said:
+
+> A script is attempting to send a message. Some scripts can contain viruses or otherwise be harmful to your computer, so it's important to verify that the script was created by a trustworthy source.
+Do you want to send the message?
+
+when you checked 'Don't show this message again', this warning dialog won't show in next time you send a inline mail.
+
 
 ## Command olkp - Search Contact (Person)
 

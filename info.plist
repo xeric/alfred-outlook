@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>bundleid</key>
-	<string>com.xericwei.alfred</string>
+	<string>com.xericwei.alfred.outlook</string>
 	<key>category</key>
 	<string>Productivity</string>
 	<key>connections</key>
@@ -13,6 +13,19 @@
 			<dict>
 				<key>destinationuid</key>
 				<string>407DC3A9-37B0-43BD-85A4-1CC8740BF2D1</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>0AC09A95-07CE-4375-9A42-660A68265C73</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>ABD5F5C9-E124-4CFF-A7E3-B2DFF62C1F45</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -36,6 +49,19 @@
 			<dict>
 				<key>destinationuid</key>
 				<string>7542A242-1841-460B-913A-541F32EF0196</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>17D73A25-5EFB-40E4-AA68-8502C80384F8</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>8DB394A4-5F25-4E2C-AED5-C9EBED7FB718</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -103,6 +129,32 @@
 				<false/>
 			</dict>
 		</array>
+		<key>56408975-1DD7-44FD-BD95-C1C34FAC2F7C</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>CF833D44-899F-4B3A-8205-042C53233EAA</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>739D3F5E-20FE-48BF-9A51-07CEBAE8C00D</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>56408975-1DD7-44FD-BD95-C1C34FAC2F7C</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
 		<key>7542A242-1841-460B-913A-541F32EF0196</key>
 		<array>
 			<dict>
@@ -116,11 +168,57 @@
 				<false/>
 			</dict>
 		</array>
+		<key>8AECEF68-5174-4A99-8093-049930A645C5</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>9F65E389-40DD-4FA1-B689-DA558CE1A42A</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>8DB394A4-5F25-4E2C-AED5-C9EBED7FB718</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>62E99127-9A2B-4C67-805C-566A80C3C9D4</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
 		<key>ABD5F5C9-E124-4CFF-A7E3-B2DFF62C1F45</key>
 		<array>
 			<dict>
 				<key>destinationuid</key>
-				<string>CF833D44-899F-4B3A-8205-042C53233EAA</string>
+				<string>739D3F5E-20FE-48BF-9A51-07CEBAE8C00D</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+			<dict>
+				<key>destinationuid</key>
+				<string>8AECEF68-5174-4A99-8093-049930A645C5</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+			<dict>
+				<key>destinationuid</key>
+				<string>17D73A25-5EFB-40E4-AA68-8502C80384F8</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -381,6 +479,31 @@ python main.py "$query"</string>
 		<dict>
 			<key>config</key>
 			<dict>
+				<key>concurrently</key>
+				<false/>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>script</key>
+				<string>query=$1
+
+python setconf.py "$query"</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>type</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>0B63B674-D674-4D94-B97A-9D8122956F48</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
 				<key>alfredfiltersresults</key>
 				<false/>
 				<key>alfredfiltersresultsmatchmode</key>
@@ -430,31 +553,6 @@ python conf.py "$query"</string>
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>concurrently</key>
-				<false/>
-				<key>escaping</key>
-				<integer>102</integer>
-				<key>script</key>
-				<string>query=$1
-
-python setconf.py "$query"</string>
-				<key>scriptargtype</key>
-				<integer>1</integer>
-				<key>scriptfile</key>
-				<string></string>
-				<key>type</key>
-				<integer>0</integer>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.action.script</string>
-			<key>uid</key>
-			<string>0B63B674-D674-4D94-B97A-9D8122956F48</string>
-			<key>version</key>
-			<integer>2</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
 				<key>argument</key>
 				<string>'{query}', {allvars}</string>
 				<key>cleardebuggertext</key>
@@ -466,40 +564,6 @@ python setconf.py "$query"</string>
 			<string>alfred.workflow.utility.debug</string>
 			<key>uid</key>
 			<string>D46C9EAB-A6BD-47D9-8189-2DB13965832D</string>
-			<key>version</key>
-			<integer>1</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>openwith</key>
-				<string>/Applications/Microsoft Outlook.app</string>
-				<key>sourcefile</key>
-				<string></string>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.action.openfile</string>
-			<key>uid</key>
-			<string>95DA09E8-1CEB-44EA-A75E-97887AF52D94</string>
-			<key>version</key>
-			<integer>3</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>inputstring</key>
-				<string>{query}</string>
-				<key>matchcasesensitive</key>
-				<false/>
-				<key>matchmode</key>
-				<integer>2</integer>
-				<key>matchstring</key>
-				<string>olk15Contact$</string>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.utility.filter</string>
-			<key>uid</key>
-			<string>B57E710F-DC5A-409C-A180-FD3509580992</string>
 			<key>version</key>
 			<integer>1</integer>
 		</dict>
@@ -556,6 +620,21 @@ python contact.py "$query"</string>
 		<dict>
 			<key>config</key>
 			<dict>
+				<key>openwith</key>
+				<string>/Applications/Microsoft Outlook.app</string>
+				<key>sourcefile</key>
+				<string></string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.openfile</string>
+			<key>uid</key>
+			<string>95DA09E8-1CEB-44EA-A75E-97887AF52D94</string>
+			<key>version</key>
+			<integer>3</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
 				<key>inputstring</key>
 				<string>{query}</string>
 				<key>matchcasesensitive</key>
@@ -563,33 +642,12 @@ python contact.py "$query"</string>
 				<key>matchmode</key>
 				<integer>2</integer>
 				<key>matchstring</key>
-				<string>[\w-]+@([\w-]+\.)+[\w-]+</string>
+				<string>olk15Contact$</string>
 			</dict>
 			<key>type</key>
 			<string>alfred.workflow.utility.filter</string>
 			<key>uid</key>
-			<string>BDA1DBAF-FF52-4C96-9310-C6A7BB563E41</string>
-			<key>version</key>
-			<integer>1</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>argumenttype</key>
-				<integer>1</integer>
-				<key>keyword</key>
-				<string>olknew</string>
-				<key>subtext</key>
-				<string>New Message in Outlook</string>
-				<key>text</key>
-				<string>New Mail</string>
-				<key>withspace</key>
-				<true/>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.input.keyword</string>
-			<key>uid</key>
-			<string>ABD5F5C9-E124-4CFF-A7E3-B2DFF62C1F45</string>
+			<string>B57E710F-DC5A-409C-A180-FD3509580992</string>
 			<key>version</key>
 			<integer>1</integer>
 		</dict>
@@ -619,6 +677,242 @@ end alfred_script</string>
 			<key>version</key>
 			<integer>1</integer>
 		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>inputstring</key>
+				<string>{query}</string>
+				<key>matchcasesensitive</key>
+				<false/>
+				<key>matchmode</key>
+				<integer>2</integer>
+				<key>matchstring</key>
+				<string>^outlook\s</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.utility.filter</string>
+			<key>uid</key>
+			<string>739D3F5E-20FE-48BF-9A51-07CEBAE8C00D</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>matchmode</key>
+				<integer>1</integer>
+				<key>matchstring</key>
+				<string>^outlook\s</string>
+				<key>replacestring</key>
+				<string></string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.utility.replace</string>
+			<key>uid</key>
+			<string>56408975-1DD7-44FD-BD95-C1C34FAC2F7C</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>inputstring</key>
+				<string>{query}</string>
+				<key>matchcasesensitive</key>
+				<false/>
+				<key>matchmode</key>
+				<integer>2</integer>
+				<key>matchstring</key>
+				<string>[\w-]+@([\w-]+\.)+[\w-]+</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.utility.filter</string>
+			<key>uid</key>
+			<string>BDA1DBAF-FF52-4C96-9310-C6A7BB563E41</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>externaltriggerid</key>
+				<string>olknewTrigger</string>
+				<key>passinputasargument</key>
+				<true/>
+				<key>passvariables</key>
+				<true/>
+				<key>workflowbundleid</key>
+				<string>self</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.output.callexternaltrigger</string>
+			<key>uid</key>
+			<string>9F65E389-40DD-4FA1-B689-DA558CE1A42A</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>alfredfiltersresults</key>
+				<false/>
+				<key>alfredfiltersresultsmatchmode</key>
+				<integer>0</integer>
+				<key>argumenttrimmode</key>
+				<integer>0</integer>
+				<key>argumenttype</key>
+				<integer>1</integer>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>keyword</key>
+				<string>olknew</string>
+				<key>queuedelaycustom</key>
+				<integer>3</integer>
+				<key>queuedelayimmediatelyinitially</key>
+				<true/>
+				<key>queuedelaymode</key>
+				<integer>0</integer>
+				<key>queuemode</key>
+				<integer>1</integer>
+				<key>runningsubtext</key>
+				<string></string>
+				<key>script</key>
+				<string># encoding: utf-8
+query=$1
+
+python newmail.py "$query"</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>subtext</key>
+				<string></string>
+				<key>title</key>
+				<string>Compose a New  Email</string>
+				<key>type</key>
+				<integer>0</integer>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.scriptfilter</string>
+			<key>uid</key>
+			<string>ABD5F5C9-E124-4CFF-A7E3-B2DFF62C1F45</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>triggerid</key>
+				<string>olknewTrigger</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.trigger.external</string>
+			<key>uid</key>
+			<string>0AC09A95-07CE-4375-9A42-660A68265C73</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>inputstring</key>
+				<string>{query}</string>
+				<key>matchcasesensitive</key>
+				<false/>
+				<key>matchmode</key>
+				<integer>2</integer>
+				<key>matchstring</key>
+				<string>^message:\s</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.utility.filter</string>
+			<key>uid</key>
+			<string>8AECEF68-5174-4A99-8093-049930A645C5</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>applescript</key>
+				<string># thanks for a scripts inspire me in a workflow with no author in internet
+
+on alfred_script(q)
+	set [receiver, msg] to get_receiver_and_content(q)
+
+	tell application "Microsoft Outlook"
+		-- activate
+
+		set myAccount to exchange account 1
+		tell me to log domain of myAccount as text
+		tell me to log is connected of myAccount as text
+		set newMessage to make new outgoing message with properties {subject: msg, content: msg, account:myAccount}
+	
+		make new recipient at newMessage with properties {email address:{name: receiver, address: receiver}}
+	
+		send newMessage
+		tell me to log was sent of newMessage as text
+		-- open newMessage
+	end tell
+end alfred_script
+
+on get_receiver_and_content(str)
+	set the_first_space_location to offset of " " in str
+	set split_before to the_first_space_location - 1
+	set split_after to the_first_space_location + 1
+	set last_p to the length of str
+	set receiver to text 1 thru split_before of str as string
+	set msg to text split_after thru last_p of str as string
+	return [receiver, msg]
+end get_receiver</string>
+				<key>cachescript</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.applescript</string>
+			<key>uid</key>
+			<string>62E99127-9A2B-4C67-805C-566A80C3C9D4</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>matchmode</key>
+				<integer>1</integer>
+				<key>matchstring</key>
+				<string>^send:\s</string>
+				<key>replacestring</key>
+				<string></string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.utility.replace</string>
+			<key>uid</key>
+			<string>8DB394A4-5F25-4E2C-AED5-C9EBED7FB718</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>inputstring</key>
+				<string>{query}</string>
+				<key>matchcasesensitive</key>
+				<false/>
+				<key>matchmode</key>
+				<integer>2</integer>
+				<key>matchstring</key>
+				<string>^send:\s</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.utility.filter</string>
+			<key>uid</key>
+			<string>17D73A25-5EFB-40E4-AA68-8502C80384F8</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
 	</array>
 	<key>readme</key>
 	<string>This workflow used for searching Outlook Mail on Mac, support Mac Outlook Version 16.
@@ -639,12 +933,19 @@ https://github.com/xeric/alfred-outlook</string>
 			<key>ypos</key>
 			<integer>190</integer>
 		</dict>
+		<key>0AC09A95-07CE-4375-9A42-660A68265C73</key>
+		<dict>
+			<key>xpos</key>
+			<integer>40</integer>
+			<key>ypos</key>
+			<integer>800</integer>
+		</dict>
 		<key>0B63B674-D674-4D94-B97A-9D8122956F48</key>
 		<dict>
 			<key>xpos</key>
 			<integer>700</integer>
 			<key>ypos</key>
-			<integer>440</integer>
+			<integer>410</integer>
 		</dict>
 		<key>12FE396B-98F3-4852-9F22-225CE8F83E98</key>
 		<dict>
@@ -653,12 +954,19 @@ https://github.com/xeric/alfred-outlook</string>
 			<key>ypos</key>
 			<integer>280</integer>
 		</dict>
+		<key>17D73A25-5EFB-40E4-AA68-8502C80384F8</key>
+		<dict>
+			<key>xpos</key>
+			<integer>530</integer>
+			<key>ypos</key>
+			<integer>970</integer>
+		</dict>
 		<key>19EF2931-C9D3-4C7E-AC1F-DD448D4C7BC6</key>
 		<dict>
 			<key>xpos</key>
-			<integer>250</integer>
+			<integer>50</integer>
 			<key>ypos</key>
-			<integer>680</integer>
+			<integer>540</integer>
 		</dict>
 		<key>1A19992F-4A02-44E8-8F36-16FE6A087598</key>
 		<dict>
@@ -688,6 +996,27 @@ https://github.com/xeric/alfred-outlook</string>
 			<key>ypos</key>
 			<integer>210</integer>
 		</dict>
+		<key>56408975-1DD7-44FD-BD95-C1C34FAC2F7C</key>
+		<dict>
+			<key>xpos</key>
+			<integer>610</integer>
+			<key>ypos</key>
+			<integer>700</integer>
+		</dict>
+		<key>62E99127-9A2B-4C67-805C-566A80C3C9D4</key>
+		<dict>
+			<key>xpos</key>
+			<integer>700</integer>
+			<key>ypos</key>
+			<integer>940</integer>
+		</dict>
+		<key>739D3F5E-20FE-48BF-9A51-07CEBAE8C00D</key>
+		<dict>
+			<key>xpos</key>
+			<integer>540</integer>
+			<key>ypos</key>
+			<integer>700</integer>
+		</dict>
 		<key>7542A242-1841-460B-913A-541F32EF0196</key>
 		<dict>
 			<key>xpos</key>
@@ -695,40 +1024,61 @@ https://github.com/xeric/alfred-outlook</string>
 			<key>ypos</key>
 			<integer>340</integer>
 		</dict>
+		<key>8AECEF68-5174-4A99-8093-049930A645C5</key>
+		<dict>
+			<key>xpos</key>
+			<integer>600</integer>
+			<key>ypos</key>
+			<integer>830</integer>
+		</dict>
+		<key>8DB394A4-5F25-4E2C-AED5-C9EBED7FB718</key>
+		<dict>
+			<key>xpos</key>
+			<integer>600</integer>
+			<key>ypos</key>
+			<integer>970</integer>
+		</dict>
 		<key>95DA09E8-1CEB-44EA-A75E-97887AF52D94</key>
 		<dict>
 			<key>xpos</key>
 			<integer>700</integer>
 			<key>ypos</key>
-			<integer>590</integer>
+			<integer>540</integer>
+		</dict>
+		<key>9F65E389-40DD-4FA1-B689-DA558CE1A42A</key>
+		<dict>
+			<key>xpos</key>
+			<integer>700</integer>
+			<key>ypos</key>
+			<integer>800</integer>
 		</dict>
 		<key>ABD5F5C9-E124-4CFF-A7E3-B2DFF62C1F45</key>
 		<dict>
 			<key>xpos</key>
-			<integer>530</integer>
+			<integer>340</integer>
 			<key>ypos</key>
-			<integer>770</integer>
+			<integer>800</integer>
 		</dict>
 		<key>AC03960B-EBAE-4D3B-898B-E74009E31C9F</key>
 		<dict>
 			<key>xpos</key>
 			<integer>260</integer>
 			<key>ypos</key>
-			<integer>440</integer>
+			<integer>410</integer>
 		</dict>
 		<key>B57E710F-DC5A-409C-A180-FD3509580992</key>
 		<dict>
 			<key>xpos</key>
 			<integer>520</integer>
 			<key>ypos</key>
-			<integer>620</integer>
+			<integer>570</integer>
 		</dict>
 		<key>BDA1DBAF-FF52-4C96-9310-C6A7BB563E41</key>
 		<dict>
 			<key>xpos</key>
-			<integer>440</integer>
+			<integer>240</integer>
 			<key>ypos</key>
-			<integer>770</integer>
+			<integer>750</integer>
 		</dict>
 		<key>C005570F-B610-4B2F-ADC5-D1D60A6DD77F</key>
 		<dict>
@@ -742,18 +1092,25 @@ https://github.com/xeric/alfred-outlook</string>
 			<key>xpos</key>
 			<integer>700</integer>
 			<key>ypos</key>
-			<integer>770</integer>
+			<integer>670</integer>
 		</dict>
 		<key>D46C9EAB-A6BD-47D9-8189-2DB13965832D</key>
 		<dict>
 			<key>xpos</key>
 			<integer>520</integer>
 			<key>ypos</key>
-			<integer>470</integer>
+			<integer>440</integer>
 		</dict>
 	</dict>
+	<key>variables</key>
+	<dict>
+		<key>mail</key>
+		<string>xeric.wei@sap.com</string>
+	</dict>
+	<key>variablesdontexport</key>
+	<array/>
 	<key>version</key>
-	<string>0.1.5</string>
+	<string>0.1.6</string>
 	<key>webaddress</key>
 	<string>https://github.com/xeric/alfred-outlook</string>
 </dict>
