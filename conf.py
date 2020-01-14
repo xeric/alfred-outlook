@@ -33,13 +33,14 @@ def handle(wf, query):
                     prepareProfile()
                 else:
                     hasOption = True
-                    option = key + ' ' + ALL_VALS[i]
+                    value = wf.stored_data(key)
+                    option = key + ' ' + "[" + value + "]" if value else ALL_VALS[i]
                     wf.add_item(
                         title=option, 
-                        subtitle='', 
-                        arg=option, 
+                        subtitle="Set Config for " + ALL_KEY_DESCS[i], 
+                        arg=key, 
                         uid=option, 
-                        valid=False
+                        valid=True
                         )
         if not hasOption:
             option = 'You can configure: ' + ', '.join(ALL_KEYS)

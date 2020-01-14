@@ -23,6 +23,7 @@ def handle(query):
     key = None
     val = None
     for rule in RULES:
+        log.info(rule)
         m = re.match(rule, query)
         if m is not None:
             validQuery = True

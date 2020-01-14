@@ -9,6 +9,7 @@ import random
 import unicodedata as ud
 from datetime import date, timedelta
 
+import workflow
 from workflow import Workflow
 from workflow import Workflow3
 from consts import *
@@ -20,13 +21,24 @@ UPDATE_FREQUENCY = 7
 
 log = None
 
-SELECT_STR = """Select Message_NormalizedSubject, Message_SenderList, Message_Preview, PathToDataFile, Message_TimeSent
+SELECT_STR = """Select Message_NormalizedSubject, Message_SenderList, Message_Preview, PathToDataFile, Message_TimeSent, Message_HasAttachment, Record_RecordID
         from Mail 
         where %s 
         ORDER BY Message_TimeSent DESC 
         LIMIT ? OFFSET ?
         """
 FOLDER_COND = """ AND Record_FolderID = ? """
+FILTER_COND = """ AND Message_NormalizedSubject NOT LIKE '%s' """
+
+FILTER_COND_FMTED = FILTER_COND % ('')
+
+ATTACH_APPLE_SCRIPT = """
+tell application "Microsoft Outlook"
+	set msg to get message id %s
+	set attas to attachments of msg
+	return length of attas
+end tell
+"""
 
 
 def main(wf):
@@ -48,6 +60,9 @@ def handle(wf, query):
                     )
     else:
         homePath = os.environ['HOME']
+
+        savedFilter = wf.stored_data(KEY_FILTER)
+        FILTER_COND_FMTED = FILTER_COND % (savedFilter)
 
         storedProfle = wf.stored_data(KEY_PROFILE)
         # set default profile to improve user experience
@@ -134,12 +149,20 @@ def handle(wf, query):
                                 content = re.sub('[\r\n]+', ' ', content)
                             else:
                                 content = "no content preview"
-                            wf.add_item(title=wf.decode(row[0] or ""),
+                            icon = 'attachment.png' if row[5] == 1 else 'mail.png'
+                            it = wf.add_item(icon=icon,
+                                        title=wf.decode(row[0] or ""),
                                         subtitle=wf.decode('[' + wf.decode(row[1] or "") + '] ' + wf.decode(content or "")),
                                         valid=True,
                                         uid=str(row[4]),
                                         arg=path,
                                         type='file')
+                            # download attachment
+                            if row[5] == 1 and not Util.isAlfredV2(wf):
+                                it.add_modifier(key='ctrl',
+                                            subtitle="Click to Download Attachments...",
+                                            arg='download_' + str(row[6]),
+                                            valid=True)
                     page += 1
                     if count > calculatedPageSize:
                         queryByVersion = originalQuery if not Util.isAlfredV2(wf) else originalQuery + '|' + str(page)
@@ -198,6 +221,9 @@ def queryFrom(cur, keywords, offset, pageSize, folder):
         senderConditions += FOLDER_COND
         variables += (folder,)
 
+    senderConditions = "(" + senderConditions
+    senderConditions += ")" + FILTER_COND_FMTED
+
     log.info(SELECT_STR % (senderConditions))
     log.info(variables)
 
@@ -227,6 +253,9 @@ def queryTitle(cur, keywords, offset, pageSize, folder):
     if folder > 0:
         titleConditions += FOLDER_COND
         variables += (folder,)
+
+    titleConditions = "(" +  titleConditions
+    titleConditions += ")" + FILTER_COND_FMTED
 
     log.info(SELECT_STR % (titleConditions))
     log.info(variables)
@@ -287,6 +316,9 @@ def queryAll(cur, keywords, offset, pageSize, folder, top = -1):
     if folder > 0:
         conditions = '(' + conditions + ')' + FOLDER_COND
         variables += (folder,)
+
+    conditions = "(" +  conditions
+    conditions += ")" + FILTER_COND_FMTED
 
     # calculate offset by top value
     # log.info("top: %d, pageSize: %d, offset: %d" % (top, pageSize, offset))
