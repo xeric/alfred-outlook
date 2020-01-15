@@ -65,7 +65,7 @@ You can use olkc to set some configurations for search:
 >   * (Limitation: only allow one filter in current version)
 
 ## Attachment Download (**Alfred V3** and up only)
-After search result listed, an icon with <img src="./blob/master/attachment.png?raw=true" width="25" height="25"> means this mail contains attachment, Press 'CTRL' and click, all attachments will be save to disk
+After search result listed, an icon with <img src="https://raw.githubusercontent.com/xeric/alfred-outlook/master/attachment.png" width="25" height="25"> means this mail contains attachment, Press 'CTRL' and click, all attachments will be save to disk
 
 Default Path to save is '~/Downloads/outlook_attachments', you can change it to your preferred folder with changing Alfred Workflow Environment Variables:
   * Open 'Alfred Preferences' -> Click on tab 'Workflows' -> Choose 'Outlook Search' in sidebar
