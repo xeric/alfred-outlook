@@ -12,6 +12,16 @@
 		<array>
 			<dict>
 				<key>destinationuid</key>
+				<string>209D79AC-0B39-4970-98F0-0B0D714DB3DC</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+			<dict>
+				<key>destinationuid</key>
 				<string>744E406F-659B-4E95-9A20-6B39A152E3A8</string>
 				<key>modifiers</key>
 				<integer>0</integer>
@@ -144,6 +154,19 @@
 				<false/>
 			</dict>
 		</array>
+		<key>209D79AC-0B39-4970-98F0-0B0D714DB3DC</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>B9D849E1-328E-4D60-B65D-CA478174E27B</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
 		<key>395D0273-E993-49F3-A97E-66AD47BC717C</key>
 		<array>
 			<dict>
@@ -216,6 +239,29 @@
 				<false/>
 			</dict>
 		</array>
+		<key>62E99127-9A2B-4C67-805C-566A80C3C9D4</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>744E406F-659B-4E95-9A20-6B39A152E3A8</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+			<dict>
+				<key>destinationuid</key>
+				<string>CDCAAABA-759D-4D85-8399-07197A7A4C71</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
 		<key>739D3F5E-20FE-48BF-9A51-07CEBAE8C00D</key>
 		<array>
 			<dict>
@@ -234,16 +280,6 @@
 			<dict>
 				<key>destinationuid</key>
 				<string>8D20D177-4409-4C23-9DDA-25DA725B5804</string>
-				<key>modifiers</key>
-				<integer>0</integer>
-				<key>modifiersubtext</key>
-				<string></string>
-				<key>vitoclose</key>
-				<false/>
-			</dict>
-			<dict>
-				<key>destinationuid</key>
-				<string>B9D849E1-328E-4D60-B65D-CA478174E27B</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -441,46 +477,6 @@
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>lastpathcomponent</key>
-				<false/>
-				<key>onlyshowifquerypopulated</key>
-				<true/>
-				<key>removeextension</key>
-				<false/>
-				<key>text</key>
-				<string>Files saved to {query}</string>
-				<key>title</key>
-				<string>Success!</string>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.output.notification</string>
-			<key>uid</key>
-			<string>8D20D177-4409-4C23-9DDA-25DA725B5804</string>
-			<key>version</key>
-			<integer>1</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>inputstring</key>
-				<string>{query}</string>
-				<key>matchcasesensitive</key>
-				<false/>
-				<key>matchmode</key>
-				<integer>2</integer>
-				<key>matchstring</key>
-				<string>^(?!olkwarning.*$).*</string>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.utility.filter</string>
-			<key>uid</key>
-			<string>744E406F-659B-4E95-9A20-6B39A152E3A8</string>
-			<key>version</key>
-			<integer>1</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
 				<key>concurrently</key>
 				<false/>
 				<key>escaping</key>
@@ -489,14 +485,66 @@
 				<string>on run argv
 	set q to item 1 of argv
   	tell application "Microsoft Outlook"
-		set configuredSavePath to system attribute "olk_attachment_path"		set savePath to POSIX path of (do shell script ("echo " &amp; configuredSavePath))		set myAttachmentsFolder to savePath
-		set msgID to my replace_chars(q, "download_", "")		set msg to get message id (msgID as integer)		set all_attachments to attachments of msg
+		set configuredSavePath to system attribute "olk_attachment_path"
+		set savePath to POSIX path of (do shell script ("echo " &amp; configuredSavePath))
+		set myAttachmentsFolder to savePath
+		set msgID to my replace_chars(q, "download_", "")
+		set msg to get message id (msgID as integer)
+		set all_attachments to attachments of msg
 		if all_attachments is {}
 			return "olkwarning: No attachment found!"
-		end if		set subj to subject of msg		set msgSubject to subj as string		set newSubject to my cleanSubject(msgSubject)		set saveToFolder to myAttachmentsFolder &amp; "/" &amp; msgID &amp; "- " &amp; newSubject		tell application "Finder"			if not (exists saveToFolder) then				do shell script "mkdir -p " &amp; quoted form of saveToFolder			end if		end tell		repeat with this_attachment in all_attachments			try				set attName to (get the name of this_attachment)				set saveAsName to saveToFolder &amp; "/" &amp; attName				save this_attachment in POSIX file saveAsName			on error				exit repeat			end try		end repeat
-		return saveToFolder	end tell
+		end if
+		set subj to subject of msg
+		set msgSubject to subj as string
+		set newSubject to my cleanSubject(msgSubject)
+		set saveToFolder to myAttachmentsFolder &amp; "/" &amp; msgID &amp; "- " &amp; newSubject
+		tell application "Finder"
+			if not (exists saveToFolder) then
+				do shell script "mkdir -p " &amp; quoted form of saveToFolder
+			end if
+		end tell
+		repeat with this_attachment in all_attachments
+			try
+				set attName to (get the name of this_attachment)
+				set saveAsName to saveToFolder &amp; "/" &amp; attName
+				save this_attachment in POSIX file saveAsName
+			on error
+				exit repeat
+			end try
+		end repeat
+		return "File Save to " &amp; saveToFolder
+	end tell
 end run
-on cleanSubject(this_text)	set c to my replace_chars(this_text, ":", "_")	set c1 to my replace_chars(c, "'", "_")	set c2 to my replace_chars(c1, "\"", "_")	set c3 to my replace_chars(c2, "!", "_")	set c4 to my replace_chars(c3, "@", "_")	set c5 to my replace_chars(c4, "#", "_")	set c6 to my replace_chars(c5, "$", "_")	set c7 to my replace_chars(c6, "%", "_")	set c8 to my replace_chars(c7, "^", "_")	set c9 to my replace_chars(c8, "&amp;", "_")	set c10 to my replace_chars(c9, "*", "_")	set c11 to my replace_chars(c10, "(", "_")	set c12 to my replace_chars(c11, ")", "_")	set c13 to my replace_chars(c12, "-", "_")	set c14 to my replace_chars(c13, "/", "_")	set c15 to my replace_chars(c14, ":", "_")	return c15end cleanSubjecton replace_chars(theText, theSearchString, theReplacementString)	set AppleScript's text item delimiters to theSearchString	set theTextItems to every text item of theText	set AppleScript's text item delimiters to theReplacementString	set theText to theTextItems as string	set AppleScript's text item delimiters to ""	return theTextend replace_charson pad(n)	return text -2 thru -1 of ("00" &amp; n)end pad</string>
+on cleanSubject(this_text)
+	set c to my replace_chars(this_text, ":", "_")
+	set c1 to my replace_chars(c, "'", "_")
+	set c2 to my replace_chars(c1, "\"", "_")
+	set c3 to my replace_chars(c2, "!", "_")
+	set c4 to my replace_chars(c3, "@", "_")
+	set c5 to my replace_chars(c4, "#", "_")
+	set c6 to my replace_chars(c5, "$", "_")
+	set c7 to my replace_chars(c6, "%", "_")
+	set c8 to my replace_chars(c7, "^", "_")
+	set c9 to my replace_chars(c8, "&amp;", "_")
+	set c10 to my replace_chars(c9, "*", "_")
+	set c11 to my replace_chars(c10, "(", "_")
+	set c12 to my replace_chars(c11, ")", "_")
+	set c13 to my replace_chars(c12, "-", "_")
+	set c14 to my replace_chars(c13, "/", "_")
+	set c15 to my replace_chars(c14, ":", "_")
+	return c15
+end cleanSubject
+on replace_chars(theText, theSearchString, theReplacementString)
+	set AppleScript's text item delimiters to theSearchString
+	set theTextItems to every text item of theText
+	set AppleScript's text item delimiters to theReplacementString
+	set theText to theTextItems as string
+	set AppleScript's text item delimiters to ""
+	return theText
+end replace_chars
+on pad(n)
+	return text -2 thru -1 of ("00" &amp; n)
+end pad</string>
 				<key>scriptargtype</key>
 				<integer>1</integer>
 				<key>scriptfile</key>
@@ -508,23 +556,6 @@ on cleanSubject(this_text)	set c to my replace_chars(this_text, ":", "_")	set 
 			<string>alfred.workflow.action.script</string>
 			<key>uid</key>
 			<string>0056A321-AB40-470C-8994-988B75DAA917</string>
-			<key>version</key>
-			<integer>2</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>autopaste</key>
-				<false/>
-				<key>clipboardtext</key>
-				<string>{query}</string>
-				<key>transient</key>
-				<false/>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.output.clipboard</string>
-			<key>uid</key>
-			<string>B9D849E1-328E-4D60-B65D-CA478174E27B</string>
 			<key>version</key>
 			<integer>2</integer>
 		</dict>
@@ -544,25 +575,6 @@ on cleanSubject(this_text)	set c to my replace_chars(this_text, ":", "_")	set 
 			<string>alfred.workflow.utility.filter</string>
 			<key>uid</key>
 			<string>08EF4250-493F-4E87-A0BB-47ADD5D4BC86</string>
-			<key>version</key>
-			<integer>1</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>inputstring</key>
-				<string>{query}</string>
-				<key>matchcasesensitive</key>
-				<false/>
-				<key>matchmode</key>
-				<integer>2</integer>
-				<key>matchstring</key>
-				<string>^olkwarning:.+</string>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.utility.filter</string>
-			<key>uid</key>
-			<string>CDCAAABA-759D-4D85-8399-07197A7A4C71</string>
 			<key>version</key>
 			<integer>1</integer>
 		</dict>
@@ -597,44 +609,6 @@ on cleanSubject(this_text)	set c to my replace_chars(this_text, ":", "_")	set 
 			<string>alfred.workflow.utility.filter</string>
 			<key>uid</key>
 			<string>00572759-3F3D-45D5-B281-6C3A33F76317</string>
-			<key>version</key>
-			<integer>1</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>matchmode</key>
-				<integer>1</integer>
-				<key>matchstring</key>
-				<string>^olkwarning:</string>
-				<key>replacestring</key>
-				<string></string>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.utility.replace</string>
-			<key>uid</key>
-			<string>4009E6EB-CAC0-44D7-8EE2-0348427E53DE</string>
-			<key>version</key>
-			<integer>1</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>lastpathcomponent</key>
-				<true/>
-				<key>onlyshowifquerypopulated</key>
-				<true/>
-				<key>removeextension</key>
-				<false/>
-				<key>text</key>
-				<string>{query}</string>
-				<key>title</key>
-				<string>Warning!</string>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.output.notification</string>
-			<key>uid</key>
-			<string>EF0EA5A2-CF83-49F3-B150-CD630E057FA0</string>
 			<key>version</key>
 			<integer>1</integer>
 		</dict>
@@ -704,6 +678,23 @@ python main.py "$query"</string>
 		<dict>
 			<key>config</key>
 			<dict>
+				<key>autopaste</key>
+				<false/>
+				<key>clipboardtext</key>
+				<string>{query}</string>
+				<key>transient</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.output.clipboard</string>
+			<key>uid</key>
+			<string>B9D849E1-328E-4D60-B65D-CA478174E27B</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
 				<key>inputstring</key>
 				<string>{query}</string>
 				<key>matchcasesensitive</key>
@@ -762,6 +753,25 @@ python main.py "$query"</string>
 			<key>config</key>
 			<dict>
 				<key>inputstring</key>
+				<string>{query}</string>
+				<key>matchcasesensitive</key>
+				<false/>
+				<key>matchmode</key>
+				<integer>2</integer>
+				<key>matchstring</key>
+				<string>^(?!olkwarning.*$).*</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.utility.filter</string>
+			<key>uid</key>
+			<string>209D79AC-0B39-4970-98F0-0B0D714DB3DC</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>inputstring</key>
 				<string>{var:page}</string>
 				<key>matchcasesensitive</key>
 				<false/>
@@ -774,6 +784,27 @@ python main.py "$query"</string>
 			<string>alfred.workflow.utility.filter</string>
 			<key>uid</key>
 			<string>7542A242-1841-460B-913A-541F32EF0196</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>lastpathcomponent</key>
+				<false/>
+				<key>onlyshowifquerypopulated</key>
+				<true/>
+				<key>removeextension</key>
+				<false/>
+				<key>text</key>
+				<string>{query}</string>
+				<key>title</key>
+				<string>Success!</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.output.notification</string>
+			<key>uid</key>
+			<string>8D20D177-4409-4C23-9DDA-25DA725B5804</string>
 			<key>version</key>
 			<integer>1</integer>
 		</dict>
@@ -874,6 +905,25 @@ python conf.py "$query"</string>
 				<key>matchmode</key>
 				<integer>2</integer>
 				<key>matchstring</key>
+				<string>^(?!olkwarning.*$).*</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.utility.filter</string>
+			<key>uid</key>
+			<string>744E406F-659B-4E95-9A20-6B39A152E3A8</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>inputstring</key>
+				<string>{query}</string>
+				<key>matchcasesensitive</key>
+				<false/>
+				<key>matchmode</key>
+				<integer>2</integer>
+				<key>matchstring</key>
 				<string>^\w+\s+.+$</string>
 			</dict>
 			<key>type</key>
@@ -905,6 +955,27 @@ python conf.py "$query"</string>
 		<dict>
 			<key>config</key>
 			<dict>
+				<key>lastpathcomponent</key>
+				<true/>
+				<key>onlyshowifquerypopulated</key>
+				<true/>
+				<key>removeextension</key>
+				<false/>
+				<key>text</key>
+				<string>{query}</string>
+				<key>title</key>
+				<string>Warning!</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.output.notification</string>
+			<key>uid</key>
+			<string>EF0EA5A2-CF83-49F3-B150-CD630E057FA0</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
 				<key>inputstring</key>
 				<string>{query}</string>
 				<key>matchcasesensitive</key>
@@ -918,6 +989,42 @@ python conf.py "$query"</string>
 			<string>alfred.workflow.utility.filter</string>
 			<key>uid</key>
 			<string>395D0273-E993-49F3-A97E-66AD47BC717C</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>inputstring</key>
+				<string>{query}</string>
+				<key>matchcasesensitive</key>
+				<false/>
+				<key>matchmode</key>
+				<integer>2</integer>
+				<key>matchstring</key>
+				<string>^olkwarning:.+</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.utility.filter</string>
+			<key>uid</key>
+			<string>CDCAAABA-759D-4D85-8399-07197A7A4C71</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>matchmode</key>
+				<integer>1</integer>
+				<key>matchstring</key>
+				<string>^olkwarning:</string>
+				<key>replacestring</key>
+				<string></string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.utility.replace</string>
+			<key>uid</key>
+			<string>4009E6EB-CAC0-44D7-8EE2-0348427E53DE</string>
 			<key>version</key>
 			<integer>1</integer>
 		</dict>
@@ -1009,7 +1116,18 @@ python contact.py "$query"</string>
 			<key>config</key>
 			<dict>
 				<key>applescript</key>
-				<string># thanks for a scripts inspire me in a workflow with no author in interneton alfred_script(q)			tell application "Microsoft Outlook"		activate		set newMessage to make new outgoing message		if q is not "" then			make new recipient at newMessage with properties {email address:{address:q}}		end if		open newMessage	end tellend alfred_script</string>
+				<string># thanks for a scripts inspire me in a workflow with no author in internet
+
+on alfred_script(q)		
+	tell application "Microsoft Outlook"
+		activate
+		set newMessage to make new outgoing message
+		if q is not "" then
+			make new recipient at newMessage with properties {email address:{address:q}}
+		end if
+		open newMessage
+	end tell
+end alfred_script</string>
 				<key>cachescript</key>
 				<false/>
 			</dict>
@@ -1180,16 +1298,39 @@ python newmail.py "$query"</string>
 			<key>config</key>
 			<dict>
 				<key>applescript</key>
-				<string># thanks for a scripts inspire me in a workflow with no author in interneton alfred_script(q)
+				<string># thanks for a scripts inspire me in a workflow with no author in internet
+
+on alfred_script(q)
 	set [receiver, msg] to get_receiver_and_content(q)
-	tell application "Microsoft Outlook"		-- activate
-		set myAccount to exchange account 1		tell me to log domain of myAccount as text		tell me to log is connected of myAccount as text		set newMessage to make new outgoing message with properties {subject: msg, content: msg, account:myAccount}			make new recipient at newMessage with properties {email address:{name: receiver, address: receiver}}			send newMessage		tell me to log was sent of newMessage as text
-		-- open newMessage	end tellend alfred_script
+
+	tell application "Microsoft Outlook"
+		-- activate
+		try
+			set myAccount to default account
+			tell me to log domain of myAccount as text
+			tell me to log is connected of myAccount as text
+			set newMessage to make new outgoing message with properties {subject: msg, content: msg, account:myAccount}
+	
+			make new recipient at newMessage with properties {email address:{name: receiver, address: receiver}}
+	
+			send newMessage
+			tell me to log was sent of newMessage as text
+			-- open newMessage
+		on error
+			return "olkwarning: Send Inline Mail Failed"
+		end try
+
+		return "Send Inline Mail to " &amp; receiver &amp; " Complete"
+	end tell
+end alfred_script
 
 on get_receiver_and_content(str)
-	set the_first_space_location to offset of " " in str	set split_before to the_first_space_location - 1	set split_after to the_first_space_location + 1
+	set the_first_space_location to offset of " " in str
+	set split_before to the_first_space_location - 1
+	set split_after to the_first_space_location + 1
 	set last_p to the length of str
-	set receiver to text 1 thru split_before of str as string	set msg to text split_after thru last_p of str as string
+	set receiver to text 1 thru split_before of str as string
+	set msg to text split_after thru last_p of str as string
 	return [receiver, msg]
 end get_receiver</string>
 				<key>cachescript</key>
@@ -1314,6 +1455,13 @@ https://github.com/xeric/alfred-outlook</string>
 			<key>ypos</key>
 			<integer>310</integer>
 		</dict>
+		<key>209D79AC-0B39-4970-98F0-0B0D714DB3DC</key>
+		<dict>
+			<key>xpos</key>
+			<integer>1050</integer>
+			<key>ypos</key>
+			<integer>400</integer>
+		</dict>
 		<key>2DB07F3A-9BF1-4FCD-B19F-0EE1232C2154</key>
 		<dict>
 			<key>xpos</key>
@@ -1331,9 +1479,9 @@ https://github.com/xeric/alfred-outlook</string>
 		<key>4009E6EB-CAC0-44D7-8EE2-0348427E53DE</key>
 		<dict>
 			<key>xpos</key>
-			<integer>960</integer>
+			<integer>1130</integer>
 			<key>ypos</key>
-			<integer>310</integer>
+			<integer>670</integer>
 		</dict>
 		<key>407DC3A9-37B0-43BD-85A4-1CC8740BF2D1</key>
 		<dict>
@@ -1373,9 +1521,9 @@ https://github.com/xeric/alfred-outlook</string>
 		<key>744E406F-659B-4E95-9A20-6B39A152E3A8</key>
 		<dict>
 			<key>xpos</key>
-			<integer>880</integer>
+			<integer>1050</integer>
 			<key>ypos</key>
-			<integer>110</integer>
+			<integer>530</integer>
 		</dict>
 		<key>7542A242-1841-460B-913A-541F32EF0196</key>
 		<dict>
@@ -1394,9 +1542,9 @@ https://github.com/xeric/alfred-outlook</string>
 		<key>8D20D177-4409-4C23-9DDA-25DA725B5804</key>
 		<dict>
 			<key>xpos</key>
-			<integer>1040</integer>
+			<integer>1210</integer>
 			<key>ypos</key>
-			<integer>70</integer>
+			<integer>500</integer>
 		</dict>
 		<key>8DB394A4-5F25-4E2C-AED5-C9EBED7FB718</key>
 		<dict>
@@ -1450,9 +1598,9 @@ https://github.com/xeric/alfred-outlook</string>
 		<key>B9D849E1-328E-4D60-B65D-CA478174E27B</key>
 		<dict>
 			<key>xpos</key>
-			<integer>1040</integer>
+			<integer>1210</integer>
 			<key>ypos</key>
-			<integer>190</integer>
+			<integer>370</integer>
 		</dict>
 		<key>BDA1DBAF-FF52-4C96-9310-C6A7BB563E41</key>
 		<dict>
@@ -1478,9 +1626,9 @@ https://github.com/xeric/alfred-outlook</string>
 		<key>CDCAAABA-759D-4D85-8399-07197A7A4C71</key>
 		<dict>
 			<key>xpos</key>
-			<integer>880</integer>
+			<integer>1050</integer>
 			<key>ypos</key>
-			<integer>230</integer>
+			<integer>670</integer>
 		</dict>
 		<key>CE568D89-8C12-4D56-A843-DD1A0421C68B</key>
 		<dict>
@@ -1499,9 +1647,9 @@ https://github.com/xeric/alfred-outlook</string>
 		<key>EF0EA5A2-CF83-49F3-B150-CD630E057FA0</key>
 		<dict>
 			<key>xpos</key>
-			<integer>1040</integer>
+			<integer>1210</integer>
 			<key>ypos</key>
-			<integer>310</integer>
+			<integer>640</integer>
 		</dict>
 	</dict>
 	<key>variables</key>
@@ -1512,7 +1660,7 @@ https://github.com/xeric/alfred-outlook</string>
 		<string>~/Downloads/outlook_attachments/</string>
 	</dict>
 	<key>version</key>
-	<string>0.1.8</string>
+	<string>0.1.9</string>
 	<key>webaddress</key>
 	<string>https://github.com/xeric/alfred-outlook</string>
 </dict>

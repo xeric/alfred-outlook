@@ -185,13 +185,19 @@ def handle(wf, query):
                         if page > 1:
                             previousPage = 0 if page - 2 < 0 else page - 2
                             queryByVersion = originalQuery if not Util.isAlfredV2(wf) else originalQuery + '|' + str(previousPage)
+                            subtitle = 'click to retrieve previous ' + str(calculatedPageSize) + ' results'
                             it = wf.add_item(title='No More Results',
-                                        subtitle='click to retrieve previous ' + str(calculatedPageSize) + ' results',
+                                        subtitle=subtitle,
                                         arg=queryByVersion,
                                         uid='z' + str(random.random()),
                                         valid=True)
                             if not Util.isAlfredV2(wf):
                                 it.setvar('page', previousPage)
+                                mod = it.add_modifier(key='ctrl',
+                                                      subtitle=subtitle,
+                                                      arg=queryByVersion,
+                                                      valid=True)
+                                mod.setvar('page', previousPage)
 
                 cur.close()
     wf.send_feedback()
@@ -286,7 +292,7 @@ def queryAll(cur, keywords, offset, pageSize, folder, top = -1):
     titleVars = []
     senderVars = []
     contentVars = []
-    conditions = None
+    conditions = " 1 = 1 " # a trick for reduce add additional "AND" in Query
 
     for kw in keywords:
         titleVars.append('%' + kw + '%')
