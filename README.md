@@ -1,6 +1,10 @@
 # alfred-outlook
 ***Alfred outlook mail search***
 
+<p style="color:red">
+please notice this workflow can't work well when you troggle ‘New Outlook’!
+</p>
+
 This is an Alfred Workflow for searching Microsoft Outlook Version 16 and later.
 ```
 olk | olkp | olknew | olkc
