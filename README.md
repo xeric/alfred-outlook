@@ -1,3 +1,6 @@
+# Discontinued Annoucement
+Due to Microsoft has upgrade their storage mechanism in New Outlook (not in Sqlite anymore), they did not upgrade any AppleScript to enable mail/contact search, and I'm starting moving Quick Launcher tool from Alfred to Raycast, I decide to stop maintaining this workflow.
+
 # alfred-outlook
 ***Alfred outlook mail search***
 
